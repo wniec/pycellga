@@ -1,11 +1,12 @@
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class StyblinskiTang(AbstractProblem):
     """
     Styblinski-Tang function implementation for optimization problems.
 
-    The Styblinski-Tang function is commonly used to test optimization algorithms. 
+    The Styblinski-Tang function is commonly used to test optimization algorithms.
     It is defined over the range [-5, 5] for each variable and has a global minimum.
 
     Attributes

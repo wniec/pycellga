@@ -1,6 +1,7 @@
 import pytest
 from pycellga.problems.single_objective.continuous.griewank import Griewank
 
+
 @pytest.fixture
 def setup_griewank():
     """
@@ -12,6 +13,7 @@ def setup_griewank():
         An instance of the Griewank problem.
     """
     return Griewank(n_var=2)  # Initialize with 2 dimensions
+
 
 def test_griewank_function(setup_griewank):
     """
@@ -31,15 +33,17 @@ def test_griewank_function(setup_griewank):
         ([600.0, 600.0], 180.012),  # Boundary point
         ([-600.0, -600.0], 180.012),  # Boundary point
         ([100.0, 200.0], 14.361),  # Arbitrary point
-        ([-300.0, 300.0], 46.002)  # Another arbitrary point
+        ([-300.0, 300.0], 46.002),  # Another arbitrary point
     ]
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_griewank.f(variables)
         print(f"Variables: {variables} => Fitness: {fitness_value}")
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

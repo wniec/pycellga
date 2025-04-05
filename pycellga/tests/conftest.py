@@ -4,7 +4,7 @@ import os
 
 # Calculate the project root directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_dir, '../'))  # Adjusted path
+project_root = os.path.abspath(os.path.join(current_dir, "../"))  # Adjusted path
 
 # Print the calculated project root directory for debugging
 print("Calculated project root:", project_root)

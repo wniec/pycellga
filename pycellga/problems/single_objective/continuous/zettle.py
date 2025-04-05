@@ -62,7 +62,7 @@ class Zettle(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         fitness = 0.0
         for i in range(len(x) - 1):
             fitness += pw((pw(x[i], 2) + pw(x[i + 1], 2)) - 2 * x[i], 2) + 0.25 * x[i]

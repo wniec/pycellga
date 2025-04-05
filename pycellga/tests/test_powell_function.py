@@ -1,17 +1,19 @@
 import pytest
 from pycellga.problems.single_objective.continuous.powell import Powell
 
+
 @pytest.fixture
 def setup_powell():
     """
     Fixture to provide an instance of the Powell problem with a default number of variables.
-    
+
     Returns
     -------
     Powell
         An instance of the Powell optimization problem.
     """
     return Powell(n_var=8)  # Default number of variables
+
 
 def test_powell_function(setup_powell):
     """
@@ -41,10 +43,14 @@ def test_powell_function(setup_powell):
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_powell.f(variables)
-        print(f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}")
+        print(
+            f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
+        )
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-1), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-1), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

@@ -1,6 +1,7 @@
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Sphere(AbstractProblem):
     """
     Sphere function implementation for optimization problems.

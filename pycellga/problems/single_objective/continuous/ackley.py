@@ -75,5 +75,10 @@ class Ackley(AbstractProblem):
         sum1 = sum(power(gene, 2) for gene in x)
         sum2 = sum(cos(2 * pi * gene) for gene in x)
 
-        fitness = -20.0 * exp(-0.2 * sqrt(sum1 / self.n_var)) - exp(sum2 / self.n_var) + 20.0 + e
+        fitness = (
+            -20.0 * exp(-0.2 * sqrt(sum1 / self.n_var))
+            - exp(sum2 / self.n_var)
+            + 20.0
+            + e
+        )
         return round(fitness, 3)

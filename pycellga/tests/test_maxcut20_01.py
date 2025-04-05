@@ -1,6 +1,7 @@
 import pytest
 from pycellga.problems.single_objective.discrete.binary.maxcut20_01 import Maxcut20_01
 
+
 @pytest.fixture
 def maxcut_instance():
     """
@@ -9,6 +10,7 @@ def maxcut_instance():
     This fixture returns an instance of the Maxcut20_01 class to be used in tests.
     """
     return Maxcut20_01()
+
 
 def test_maxcut20_01(maxcut_instance):
     """
@@ -34,13 +36,20 @@ def test_maxcut20_01(maxcut_instance):
 
     # Specific assertions based on expected behavior
     assert fitness_value1 > 0, f"Expected positive fitness, got {fitness_value1}"
-    assert fitness_value2 == 0, f"Expected zero fitness for all-ones, got {fitness_value2}"
-    assert fitness_value3 == 0, f"Expected zero fitness for all-zeros, got {fitness_value3}"
+    assert fitness_value2 == 0, (
+        f"Expected zero fitness for all-ones, got {fitness_value2}"
+    )
+    assert fitness_value3 == 0, (
+        f"Expected zero fitness for all-zeros, got {fitness_value3}"
+    )
 
-    print(f"Test results:\n"
-          f"Sample Chromosome 1 (Alternating): Fitness = {fitness_value1}\n"
-          f"Sample Chromosome 2 (All Ones): Fitness = {fitness_value2}\n"
-          f"Sample Chromosome 3 (All Zeros): Fitness = {fitness_value3}")
+    print(
+        f"Test results:\n"
+        f"Sample Chromosome 1 (Alternating): Fitness = {fitness_value1}\n"
+        f"Sample Chromosome 2 (All Ones): Fitness = {fitness_value2}\n"
+        f"Sample Chromosome 3 (All Zeros): Fitness = {fitness_value3}"
+    )
+
 
 if __name__ == "__main__":
     pytest.main()

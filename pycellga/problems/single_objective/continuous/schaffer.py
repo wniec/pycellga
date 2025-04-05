@@ -3,6 +3,7 @@ import numpy as np
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Schaffer(AbstractProblem):
     """
     Modified Schaffer function #1 for optimization problems.
@@ -62,7 +63,7 @@ class Schaffer(AbstractProblem):
         for i in range(len(x) - 1):
             xi = x[i]
             xi1 = x[i + 1]
-            term1 = np.sin(xi**2 + xi1**2)**2
+            term1 = np.sin(xi**2 + xi1**2) ** 2
             term2 = 1 + 0.001 * (xi**2 + xi1**2)
-            fitness += 0.5 + (term1 - 0.5)**2 / term2**2
+            fitness += 0.5 + (term1 - 0.5) ** 2 / term2**2
         return round(fitness, 3)

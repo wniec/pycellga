@@ -2,6 +2,7 @@ from pycellga.problems.single_objective.discrete.permutation.tsp import Tsp
 import random
 import pytest
 
+
 @pytest.fixture
 def tsp_instance():
     """
@@ -11,15 +12,16 @@ def tsp_instance():
     """
     return Tsp()
 
+
 def test_tsp(tsp_instance):
     """
     Test the TSP function implementation.
 
-    This test verifies the calculation of the TSP (Traveling Salesman Problem) function value for 
+    This test verifies the calculation of the TSP (Traveling Salesman Problem) function value for
     different permutations of cities.
 
-    The TSP function evaluates the total distance for a given permutation of cities. This test checks 
-    if the function computes the correct distance for specific permutations generated using different 
+    The TSP function evaluates the total distance for a given permutation of cities. This test checks
+    if the function computes the correct distance for specific permutations generated using different
     random seeds.
     """
     # Test case 1: Random permutation with seed 0
@@ -42,6 +44,7 @@ def test_tsp(tsp_instance):
     expected_distance = tsp_instance.f(chromosome)
     assert isinstance(expected_distance, float), "The result should be a float."
     print(f"Chromosome: {chromosome} => Distance: {expected_distance}")
+
 
 if __name__ == "__main__":
     pytest.main()

@@ -5,9 +5,10 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class ByteMutationRandom(MutationOperator):
     """
-    ByteMutationRandom operator defined in (Satman, 2013). ByteMutationRandom performs 
+    ByteMutationRandom operator defined in (Satman, 2013). ByteMutationRandom performs
     a random byte mutation on an individual's chromosome in a Genetic Algorithm.
 
     Parameters
@@ -18,7 +19,9 @@ class ByteMutationRandom(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the ByteMutationRandom object.
 

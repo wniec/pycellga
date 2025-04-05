@@ -5,6 +5,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class ShuffleMutation(MutationOperator):
     """
     ShuffleMutation performs a shuffle mutation on an individual's chromosome in a Genetic Algorithm.
@@ -17,7 +18,9 @@ class ShuffleMutation(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the ShuffleMutation object.
 

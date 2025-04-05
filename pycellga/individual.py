@@ -1,9 +1,7 @@
-
 from numpy import random
 import numpy as np
 import random as rd
 
-from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
 
@@ -29,11 +27,13 @@ class Individual:
         The size of the chromosome.
     """
 
-    def __init__(self, 
-                 gen_type: GeneType = GeneType.BINARY, 
-                 ch_size: int = 0,
-                 mins : list[float] = [],
-                 maxs : list[float] = []):
+    def __init__(
+        self,
+        gen_type: GeneType = GeneType.BINARY,
+        ch_size: int = 0,
+        mins: list[float] = [],
+        maxs: list[float] = [],
+    ):
         """
         Initialize an Individual with a specific genome type and chromosome size.
 
@@ -67,7 +67,6 @@ class Individual:
         self.mins = mins
         self.maxs = maxs
 
-
     def randomize(self):
         """
         Randomly initialize the chromosome based on the genome type.
@@ -76,7 +75,7 @@ class Individual:
         -------
         list
             The randomly generated chromosome.
-        
+
         Raises
         ------
         NotImplementedError
@@ -85,7 +84,7 @@ class Individual:
 
         if self.gen_type == GeneType.BINARY:
             self.chromosome = [random.randint(2) for i in range(self.ch_size)]
-            
+
         elif self.gen_type == GeneType.PERMUTATION:
             # Generate a random permutation of the numbers 1 to ch_size.
             # by default random.permutation emits numbers from 0 to ch_size-1
@@ -95,14 +94,15 @@ class Individual:
         elif self.gen_type == GeneType.REAL:
             if len(self.mins) > 0:
                 assert len(self.mins) == len(self.maxs) == self.ch_size
-                self.chromosome = [rd.uniform(self.mins[i], self.maxs[i]) for i in range(self.ch_size)]
+                self.chromosome = [
+                    rd.uniform(self.mins[i], self.maxs[i]) for i in range(self.ch_size)
+                ]
             else:
                 self.chromosome = [rd.uniform(-1.0, 0.1) for i in range(self.ch_size)]
 
         else:
             raise NotImplementedError("This gen_type not implemented yet.")
         return self.chromosome
-
 
     def generate_candidate(self, probvector: list) -> list:
         """

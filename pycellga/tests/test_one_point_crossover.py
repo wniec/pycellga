@@ -3,6 +3,7 @@ from pycellga.individual import Individual
 from pycellga.common import GeneType
 from pycellga.problems.single_objective.discrete.binary.one_max import OneMax
 
+
 def test_one_point_crossover():
     """
     Test the OnePointCrossover class for generating offspring from two parents.
@@ -41,9 +42,15 @@ def test_one_point_crossover():
 
     # Check that the chromosome size of both offspring matches the parents
     assert child1.ch_size == child2.ch_size, "Offspring chromosome sizes do not match."
-    assert child1.ch_size == CHSIZE, "Offspring chromosome size does not match expected size."
+    assert child1.ch_size == CHSIZE, (
+        "Offspring chromosome size does not match expected size."
+    )
 
     # Ensure all genes in the offspring are binary (0 or 1)
     for i in range(CHSIZE):
-        assert child1.chromosome[i] in [0, 1], "Invalid gene value in child1's chromosome."
-        assert child2.chromosome[i] in [0, 1], "Invalid gene value in child2's chromosome."
+        assert child1.chromosome[i] in [0, 1], (
+            "Invalid gene value in child1's chromosome."
+        )
+        assert child2.chromosome[i] in [0, 1], (
+            "Invalid gene value in child2's chromosome."
+        )

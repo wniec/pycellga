@@ -5,6 +5,7 @@ from pycellga.common import GeneType
 
 import random
 
+
 def test_two_opt_mutation():
     """
     Test the TwoOptMutation class for the Individual class on the TSP problem.
@@ -52,5 +53,9 @@ def test_two_opt_mutation():
 
     # Assertions to check correctness
     assert elementschanged > 0, "No elements were changed during mutation."
-    assert newind.ch_size == CHSIZE, "The chromosome size of the mutated individual is incorrect."
-    assert newind.ch_size == ind.ch_size, "The chromosome size of the mutated individual does not match the original size."
+    assert newind.ch_size == CHSIZE, (
+        "The chromosome size of the mutated individual is incorrect."
+    )
+    assert newind.ch_size == ind.ch_size, (
+        "The chromosome size of the mutated individual does not match the original size."
+    )

@@ -1,6 +1,4 @@
 import pytest
-from numpy import random
-import random as rd
 
 from pycellga.individual import Individual
 from pycellga.common import GeneType
@@ -12,6 +10,7 @@ def setup_individual():
     Fixture to provide an instance of the Individual class with different configurations.
     """
     return Individual(gen_type=GeneType.BINARY, ch_size=10)
+
 
 def test_individual_init():
     """
@@ -26,6 +25,7 @@ def test_individual_init():
     assert ind.neighbors_positions is None
     assert ind.neighbors is None
 
+
 def test_randomize_binary():
     """
     Test the randomization of the chromosome for a binary genome type.
@@ -35,6 +35,7 @@ def test_randomize_binary():
     assert len(ind.chromosome) == 10
     assert all(gene in [0, 1] for gene in ind.chromosome)
 
+
 def test_randomize_permutation():
     """
     Test the randomization of the chromosome for a permutation genome type.
@@ -43,10 +44,11 @@ def test_randomize_permutation():
     ind = Individual(gen_type=GeneType.PERMUTATION, ch_size=chsize)
     ind.randomize()
     assert len(ind.chromosome) == chsize
-    for i in range(1, chsize+1):
+    for i in range(1, chsize + 1):
         assert i in ind.chromosome
 
     assert len(set(ind.chromosome)) == len(ind.chromosome)
+
 
 def test_randomize_real_valued():
     """
@@ -57,6 +59,7 @@ def test_randomize_real_valued():
     ind.randomize()
     assert len(ind.chromosome) == chsize
     assert all(isinstance(gene, float) for gene in ind.chromosome)
+
 
 def test_illegal_genome_type():
     """
@@ -73,13 +76,13 @@ def test_get_set_neighbors_positions():
     """
     Test getting and setting the positions of the individual's neighbors.
     """
-    
+
 
 def test_get_set_neighbors():
     """
     Test getting and setting the list of neighbors for the individual.
     """
-    
+
 
 # Run the tests
 if __name__ == "__main__":

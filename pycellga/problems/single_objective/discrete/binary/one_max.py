@@ -3,11 +3,12 @@ from pycellga.common import GeneType
 
 from typing import List
 
+
 class OneMax(AbstractProblem):
     """
     Represents the OneMax problem.
 
-    The OneMax problem is a simple genetic algorithm benchmark problem 
+    The OneMax problem is a simple genetic algorithm benchmark problem
     where the fitness of a chromosome is the sum of its bits.
 
     Attributes
@@ -29,7 +30,7 @@ class OneMax(AbstractProblem):
 
     def __init__(self, n_var: int = 100):
         """
-        Initialize the OneMax problem with a default number of variables (100) 
+        Initialize the OneMax problem with a default number of variables (100)
         and binary gene bounds.
 
         Parameters
@@ -39,7 +40,7 @@ class OneMax(AbstractProblem):
         """
         xl = 0
         xu = 1
-        gen_type=GeneType.BINARY
+        gen_type = GeneType.BINARY
 
         super().__init__(gen_type=gen_type, n_var=n_var, xl=xl, xu=xu)
 
@@ -52,7 +53,7 @@ class OneMax(AbstractProblem):
         Parameters
         ----------
         x : List[int]
-            A list representing the chromosome, where each element is a binary 
+            A list representing the chromosome, where each element is a binary
             value (0 or 1).
 
         Returns

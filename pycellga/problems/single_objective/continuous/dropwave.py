@@ -1,4 +1,3 @@
-
 from numpy import power, cos, sqrt
 from typing import List
 from pycellga.problems.abstract_problem import AbstractProblem
@@ -61,7 +60,7 @@ class Dropwave(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         x1, x2 = x
         sqrts_sums = power(x1, 2) + power(x2, 2)
         denominator = 0.5 * sqrts_sums + 2

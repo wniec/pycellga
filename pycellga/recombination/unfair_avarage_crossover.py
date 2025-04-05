@@ -5,6 +5,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class UnfairAvarageCrossover(RecombinationOperator):
     """
     UnfairAvarageCrossover performs an unfair average crossover on a pair of parent individuals

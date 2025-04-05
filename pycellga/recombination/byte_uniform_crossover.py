@@ -6,9 +6,10 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class ByteUniformCrossover(RecombinationOperator):
     """
-    ByteUniformCrossover operator defined in (Satman, 2013). ByteUniformCrossover performs a 
+    ByteUniformCrossover operator defined in (Satman, 2013). ByteUniformCrossover performs a
     uniform crossover at the byte level on a pair of parent individuals to produce offspring individuals.
 
     Parameters
@@ -33,7 +34,9 @@ class ByteUniformCrossover(RecombinationOperator):
         self.parents = parents
         self.problem = problem
 
-    def combine(self, p1: Individual, p2: Individual, locationsource: Individual) -> Individual:
+    def combine(
+        self, p1: Individual, p2: Individual, locationsource: Individual
+    ) -> Individual:
         """
         Combine two parent individuals using uniform crossover at the byte level to produce a single offspring.
 
@@ -89,7 +92,4 @@ class ByteUniformCrossover(RecombinationOperator):
         p1 = self.parents[0]
         p2 = self.parents[1]
 
-        return [
-            self.combine(p1, p2, p1),
-            self.combine(p1, p2, p2)
-        ]
+        return [self.combine(p1, p2, p1), self.combine(p1, p2, p2)]

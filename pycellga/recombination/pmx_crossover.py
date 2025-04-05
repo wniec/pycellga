@@ -4,6 +4,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class PMXCrossover(RecombinationOperator):
     """
     PMXCrossover performs Partially Mapped Crossover (PMX) on a pair of parent individuals

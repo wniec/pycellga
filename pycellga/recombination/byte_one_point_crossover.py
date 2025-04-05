@@ -6,9 +6,10 @@ from pycellga.individual import Individual
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class ByteOnePointCrossover(RecombinationOperator):
     """
-    ByteOnePointCrossover operator defined in (Satman, 2013). ByteOnePointCrossover performs a 
+    ByteOnePointCrossover operator defined in (Satman, 2013). ByteOnePointCrossover performs a
     one-point crossover at the byte level on a pair of parent individuals to produce offspring individuals.
 
     Parameters

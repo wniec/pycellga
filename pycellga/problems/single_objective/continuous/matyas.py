@@ -1,8 +1,8 @@
-
 from mpmath import power as pw
 
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
+
 
 class Matyas(AbstractProblem):
     """

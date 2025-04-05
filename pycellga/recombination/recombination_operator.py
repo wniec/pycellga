@@ -1,4 +1,3 @@
 class RecombinationOperator:
-     def get_recombinations(self) -> list:
+    def get_recombinations(self) -> list:
         pass
-    

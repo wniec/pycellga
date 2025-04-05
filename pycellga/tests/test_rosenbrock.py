@@ -1,12 +1,16 @@
 import pytest
 from pycellga.problems.single_objective.continuous.rosenbrock import Rosenbrock
 
+
 @pytest.fixture
 def setup_rosenbrock():
     """
     Fixture to provide an instance of the Rosenbrock problem.
     """
-    return Rosenbrock(n_var=4)  # Ensure compatibility with the new AbstractProblem structure
+    return Rosenbrock(
+        n_var=4
+    )  # Ensure compatibility with the new AbstractProblem structure
+
 
 def test_rosenbrock(setup_rosenbrock):
     """
@@ -29,15 +33,19 @@ def test_rosenbrock(setup_rosenbrock):
     test_cases = [
         ([2.305, -4.025, 3.805, -1.505], 49665.553),
         ([-4.995, -2.230, -3.706, 2.305], 94539.427),
-        ([1.0, 1.0, 1.0, 1.0], 0.0)  # Global minimum
+        ([1.0, 1.0, 1.0, 1.0], 0.0),  # Global minimum
     ]
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_rosenbrock.f(variables)
-        print(f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}")
+        print(
+            f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
+        )
         assert isinstance(fitness_value, float)
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

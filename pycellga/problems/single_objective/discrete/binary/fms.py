@@ -4,6 +4,7 @@ from pycellga.common import GeneType
 from numpy import pi, sin, random
 from typing import List
 
+
 class Fms(AbstractProblem):
     """
     Frequency Modulation Sound (FMS) function implementation for optimization problems.
@@ -79,10 +80,23 @@ class Fms(AbstractProblem):
         w3 = decode_segment(x[160:192])
 
         # Generate target signal
-        target = [sin((5.0 * theta * i) - (1.5 * sin((4.8 * theta * i) + (2.0 * sin(4.9 * theta * i))))) for i in range(101)]
+        target = [
+            sin(
+                (5.0 * theta * i)
+                - (1.5 * sin((4.8 * theta * i) + (2.0 * sin(4.9 * theta * i))))
+            )
+            for i in range(101)
+        ]
 
         # Generate predicted signal
-        y = [a1 * sin((w1 * theta * j) - (a2 * sin((w2 * theta * j) + (a3 * sin(w3 * theta * j))))) for j in range(101)]
+        y = [
+            a1
+            * sin(
+                (w1 * theta * j)
+                - (a2 * sin((w2 * theta * j) + (a3 * sin(w3 * theta * j))))
+            )
+            for j in range(101)
+        ]
 
         # Compute mean squared error
         fitness = sum((target[k] - y[k]) ** 2 for k in range(101))

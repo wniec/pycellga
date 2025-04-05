@@ -5,6 +5,7 @@ from pycellga.individual import Individual
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class TwoPointCrossover(RecombinationOperator):
     """
     TwoPointCrossover performs a two-point crossover on a pair of parent individuals

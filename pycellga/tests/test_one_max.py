@@ -1,5 +1,6 @@
 import pytest
-from pycellga.problems.single_objective.discrete.binary.one_max import OneMax  
+from pycellga.problems.single_objective.discrete.binary.one_max import OneMax
+
 
 @pytest.fixture
 def one_max_instance():
@@ -10,13 +11,14 @@ def one_max_instance():
     """
     return OneMax()
 
+
 def test_one_max(one_max_instance):
     """
     Test the OneMax function implementation.
 
     This test verifies the calculation of the OneMax function value for specific binary input values.
 
-    The OneMax function evaluates the number of 1s in a binary list. This test ensures that the function 
+    The OneMax function evaluates the number of 1s in a binary list. This test ensures that the function
     computes the correct number of 1s for various test inputs.
     """
     # Test case 1: All variables set to 1
@@ -34,6 +36,7 @@ def test_one_max(one_max_instance):
     # Test case 4: Mixed 1s and 0s
     # Expected output is 3 because there are 3 ones in the input list.
     assert one_max_instance.f([1, 0, 1, 0, 1]) == -3
+
 
 if __name__ == "__main__":
     pytest.main()

@@ -55,9 +55,11 @@ class Threehumps(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         x1, x2 = x
-        fitness = 2 * pw(x1, 2) - 1.05 * pw(x1, 4) + (pw(x1, 6) / 6) + x1 * x2 + pw(x2, 2)
+        fitness = (
+            2 * pw(x1, 2) - 1.05 * pw(x1, 4) + (pw(x1, 6) / 6) + x1 * x2 + pw(x2, 2)
+        )
         return round(fitness, 6)
 
     def evaluate(self, x, out, *args, **kwargs):

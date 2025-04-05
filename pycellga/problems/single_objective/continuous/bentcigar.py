@@ -1,4 +1,3 @@
-
 from mpmath import power as pw
 from typing import List
 
@@ -44,7 +43,7 @@ class Bentcigar(AbstractProblem):
         n_var : int
             Number of variables (dimensions) in the problem.
         """
-        gen_type = GeneType.REAL  
+        gen_type = GeneType.REAL
         xl = -100.0
         xu = 100.0
 
@@ -64,9 +63,9 @@ class Bentcigar(AbstractProblem):
         float
             The computed fitness value for the given solution.
         """
-        a = pw(x[0], 2)  
-        b = pw(10, 6)    
-        sum_val = sum(pw(xi, 2) for xi in x[1:])  
+        a = pw(x[0], 2)
+        b = pw(10, 6)
+        sum_val = sum(pw(xi, 2) for xi in x[1:])
 
         fitness = a + (b * sum_val)
         return round(fitness, 3)

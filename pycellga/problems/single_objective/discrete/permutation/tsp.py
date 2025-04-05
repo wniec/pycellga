@@ -3,7 +3,6 @@ from pycellga.common import GeneType
 
 import os
 import tsplib95
-from math import sqrt
 from typing import List
 from geopy.distance import geodesic
 
@@ -35,9 +34,9 @@ class Tsp(AbstractProblem):
         n_var : int, optional
             Number of nodes in the TSP problem (default is 14).
         """
-        xl = [1] 
+        xl = [1]
         xu = [14]
-        gen_type=GeneType.PERMUTATION
+        gen_type = GeneType.PERMUTATION
 
         super().__init__(gen_type=gen_type, n_var=n_var, xl=xl, xu=xu)
 

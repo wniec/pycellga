@@ -1,5 +1,5 @@
 from typing import List
-from enum import Enum 
+from enum import Enum
 
 from pycellga.grid import *
 from pycellga.individual import *
@@ -8,18 +8,19 @@ from pycellga.neighborhoods.linear_9 import Linear9
 from pycellga.problems.abstract_problem import AbstractProblem
 
 
-
 class OptimizationMethod(Enum):
     """
     OptimizationMethod is an enumeration class that represents the optimization methods used in an evolutionary algorithm.
     The five optimization methods are CGA, SYNCGA, ALPHA_CGA, CCGA, and MCCCGA.
     "cga", "sync_cga", "alpha_cga", "ccga", "mcccga"
     """
+
     CGA = 1
     SYNCGA = 2
     ALPHA_CGA = 3
     CCGA = 4
     MCCCGA = 5
+    GraphCGA = 6
 
 
 class Population:
@@ -43,16 +44,19 @@ class Population:
     vector : list
         A list used to generate candidates for the population (relevant for MCCCGA).
     """
-    def __init__(self, 
-                 method_name: OptimizationMethod = OptimizationMethod.CGA, 
-                 ch_size: int = 0, 
-                 n_rows: int = 0, 
-                 n_cols: int = 0, 
-                 gen_type: str = "", 
-                 problem: AbstractProblem = None, 
-                 vector: list = [],
-                 mins : list[float] = [],
-                 maxs : list[float] = []):
+
+    def __init__(
+        self,
+        method_name: OptimizationMethod = OptimizationMethod.CGA,
+        ch_size: int = 0,
+        n_rows: int = 0,
+        n_cols: int = 0,
+        gen_type: str = "",
+        problem: AbstractProblem = None,
+        vector: list = [],
+        mins: list[float] = [],
+        maxs: list[float] = [],
+    ):
         """
         Initialize the Population with the specified parameters.
 
@@ -103,11 +107,20 @@ class Population:
         grid = Grid(self.n_rows, self.n_cols).make_2d_grid()
 
         for i in range(pop_size):
-            ind = Individual(gen_type = self.gen_type, ch_size = self.ch_size, 
-                             mins = self.mins, maxs = self.maxs)
-                
+            ind = Individual(
+                gen_type=self.gen_type,
+                ch_size=self.ch_size,
+                mins=self.mins,
+                maxs=self.maxs,
+            )
+
             # Initialize chromosome and evaluate fitness for cga, syn_cga and alpha_cga
-            if self.method_name in [OptimizationMethod.CGA, OptimizationMethod.SYNCGA, OptimizationMethod.ALPHA_CGA, OptimizationMethod.CCGA]:
+            if self.method_name in [
+                OptimizationMethod.CGA,
+                OptimizationMethod.SYNCGA,
+                OptimizationMethod.ALPHA_CGA,
+                OptimizationMethod.CCGA,
+            ]:
                 ind.chromosome = ind.randomize()
                 ind.fitness_value = self.problem.f(ind.chromosome)
 

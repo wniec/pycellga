@@ -4,6 +4,7 @@ from typing import List
 from pycellga.individual import Individual
 from pycellga.selection.selection_operator import SelectionOperator
 
+
 class RouletteWheelSelection(SelectionOperator):
     """
     RouletteWheelSelection performs a roulette wheel selection on a population of individuals
@@ -63,7 +64,7 @@ class RouletteWheelSelection(SelectionOperator):
         random_number = random.uniform(0, 1)
         previous_probability = 0
         for neighbor in neighbors:
-            previous_probability += (neighbor.fitness_value / neighbors_fitness_sum)
+            previous_probability += neighbor.fitness_value / neighbors_fitness_sum
 
             if p1 != neighbor:
                 if random_number < previous_probability:

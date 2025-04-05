@@ -61,5 +61,10 @@ class Rosenbrock(AbstractProblem):
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
 
-        fitness = sum([(100 * pw((x[i + 1] - pw(x[i], 2)), 2)) + pw((1 - x[i]), 2) for i in range(self.n_var - 1)])
+        fitness = sum(
+            [
+                (100 * pw((x[i + 1] - pw(x[i], 2)), 2)) + pw((1 - x[i]), 2)
+                for i in range(self.n_var - 1)
+            ]
+        )
         return round(fitness, 3)

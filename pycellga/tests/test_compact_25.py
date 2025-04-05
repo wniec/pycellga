@@ -1,5 +1,6 @@
 from pycellga.neighborhoods.compact_25 import Compact25
 
+
 def test_compact_25():
     """
     Test the Compact25 class for calculating neighbor positions in a grid.
@@ -31,15 +32,27 @@ def test_compact_25():
 
     # Test for a central position in the grid
     position = (3, 3)
-    the_neighbors_positions = Compact25(position, n_rows, n_cols).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 24, "The number of neighbors for a central position is not 24."
+    the_neighbors_positions = Compact25(
+        position, n_rows, n_cols
+    ).calculate_neighbors_positions()
+    assert len(the_neighbors_positions) == 24, (
+        "The number of neighbors for a central position is not 24."
+    )
 
     # Test for a position near the bottom-left corner of the grid
     position = (5, 1)
-    the_neighbors_positions = Compact25(position, n_rows, n_cols).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 24, "The number of neighbors for a bottom-left corner position is not 24."
+    the_neighbors_positions = Compact25(
+        position, n_rows, n_cols
+    ).calculate_neighbors_positions()
+    assert len(the_neighbors_positions) == 24, (
+        "The number of neighbors for a bottom-left corner position is not 24."
+    )
 
     # Test for a position near the top-center of the grid
     position = (1, 3)
-    the_neighbors_positions = Compact25(position, n_rows, n_cols).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 24, "The number of neighbors for a top-center position is not 24."
+    the_neighbors_positions = Compact25(
+        position, n_rows, n_cols
+    ).calculate_neighbors_positions()
+    assert len(the_neighbors_positions) == 24, (
+        "The number of neighbors for a top-center position is not 24."
+    )

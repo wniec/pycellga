@@ -5,6 +5,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.recombination.recombination_operator import RecombinationOperator
 
+
 class BlxalphaCrossover(RecombinationOperator):
     """
     BlxalphaCrossover performs BLX-alpha crossover on a pair of parent individuals
@@ -32,7 +33,9 @@ class BlxalphaCrossover(RecombinationOperator):
         self.parents = parents
         self.problem = problem
 
-    def combine(self, p1: Individual, p2: Individual, locationsource: Individual) -> Individual:
+    def combine(
+        self, p1: Individual, p2: Individual, locationsource: Individual
+    ) -> Individual:
         """
         Combine two parent individuals using BLX-alpha crossover to produce a single offspring.
 
@@ -97,7 +100,4 @@ class BlxalphaCrossover(RecombinationOperator):
         p1 = self.parents[0]
         p2 = self.parents[1]
 
-        return [
-            self.combine(p1, p2, p1),
-            self.combine(p1, p2, p2)
-        ]
+        return [self.combine(p1, p2, p1), self.combine(p1, p2, p2)]

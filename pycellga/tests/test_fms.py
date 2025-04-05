@@ -18,6 +18,7 @@ def fms_instance():
     """
     return Fms()
 
+
 def test_fms(fms_instance):
     """
     Test the Fms function implementation.
@@ -40,7 +41,7 @@ def test_fms(fms_instance):
         np.array([1.0, 2.0, -1.5, 0.5, 2.5, -0.75]),  # Valid input within bounds
         np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0]),  # All zeros
         np.array([-6.4, 6.35, -6.4, 6.35, -6.4, 6.35]),  # Boundary values
-        np.random.uniform(-6.4, 6.35, size=6)  # Random input within bounds
+        np.random.uniform(-6.4, 6.35, size=6),  # Random input within bounds
     ]
 
     for sample_chromosome in test_cases:
@@ -49,6 +50,7 @@ def test_fms(fms_instance):
         assert isinstance(fitness_value, float), "Fitness value should be a float."
         assert fitness_value >= 0, "Fitness value should be non-negative."
         print(f"Sample chromosome: {sample_chromosome}, Fitness: {fitness_value}")
+
 
 if __name__ == "__main__":
     pytest.main()

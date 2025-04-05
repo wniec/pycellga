@@ -9,7 +9,7 @@ class Peak(AbstractProblem):
     """
     Represents the Peak problem.
 
-    The Peak problem evaluates the fitness of a chromosome based on its 
+    The Peak problem evaluates the fitness of a chromosome based on its
     distance to a set of target peaks.
 
     Attributes
@@ -31,7 +31,7 @@ class Peak(AbstractProblem):
 
     def __init__(self, n_var: int = 100):
         """
-        Initialize the Peak problem with a default number of variables (100) 
+        Initialize the Peak problem with a default number of variables (100)
         and binary gene bounds.
 
         Parameters
@@ -41,7 +41,7 @@ class Peak(AbstractProblem):
         """
         xl = 0
         xu = 1
-        gen_type=GeneType.BINARY
+        gen_type = GeneType.BINARY
         super().__init__(gen_type=gen_type, n_var=n_var, xl=xl, xu=xu)
 
         # Seed the random number generator for reproducibility
@@ -54,13 +54,13 @@ class Peak(AbstractProblem):
         """
         Evaluates the fitness of a given chromosome for the Peak problem.
 
-        The fitness function calculates the distance between the given 
+        The fitness function calculates the distance between the given
         chromosome and a set of randomly generated target peaks.
 
         Parameters
         ----------
         x : list
-            A list representing the chromosome, where each element is a binary 
+            A list representing the chromosome, where each element is a binary
             value (0 or 1).
 
         Returns

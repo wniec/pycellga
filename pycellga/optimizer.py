@@ -1,8 +1,9 @@
-
 import random
 import numpy as np
 
-from pycellga.byte_operators import * 
+from pycellga.GraphProblem import GraphProblem
+from pycellga.byte_operators import *
+from pycellga.graph_population import GraphPopulation
 from pycellga.population import *
 from pycellga.individual import *
 from pycellga.mutation.bit_flip_mutation import *
@@ -13,15 +14,16 @@ from pycellga.problems.single_objective.discrete.binary.one_max import *
 from typing import Callable, List, Tuple
 from collections.abc import Callable
 
-
 from dataclasses import dataclass
-from typing import List, Callable
+from typing import Callable
+
 
 @dataclass
 class Result:
     chromosome: List[float]
     fitness_value: float
     generation_found: int
+
 
 def cga(
     n_cols: int,
@@ -34,7 +36,7 @@ def cga(
     selection: SelectionOperator,
     recombination: RecombinationOperator,
     mutation: MutationOperator,
-    seed_par: int = None
+    seed_par: int = None,
 ) -> Result:
     """
     Optimize the given problem using a genetic algorithm.
@@ -88,14 +90,15 @@ def cga(
 
     # Generate Initial Population
     pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                gen_type = problem.gen_type, 
-                problem = problem,
-                mins = problem.xl,
-                maxs = problem.xu).initial_population()
+        method_name,
+        ch_size,
+        n_rows,
+        n_cols,
+        gen_type=problem.gen_type,
+        problem=problem,
+        mins=problem.xl,
+        maxs=problem.xu,
+    ).initial_population()
 
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
 
@@ -104,7 +107,7 @@ def cga(
     best_ever_solution = Result(
         chromosome=pop_list_ordered[0].chromosome,
         fitness_value=pop_list_ordered[0].fitness_value,
-        generation_found=0
+        generation_found=0,
     )
 
     mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
@@ -144,14 +147,148 @@ def cga(
             best_ever_solution = Result(
                 chromosome=pop_list_ordered[0].chromosome,
                 fitness_value=pop_list_ordered[0].fitness_value,
-                generation_found=generation
+                generation_found=generation,
             )
 
         mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
         avg_objectives.append(mean)
         generation += 1
-    
+
     return best_ever_solution
+
+
+def graph_cga(
+    n_cols: int,
+    n_rows: int,
+    n_gen: int,
+    ch_size: int,
+    p_crossover: float,
+    p_mutation: float,
+    problem: GraphProblem,
+    selection: SelectionOperator,
+    recombination: RecombinationOperator,
+    mutation: MutationOperator,
+    seed_par: int = None,
+) -> Result:
+    """
+    Optimize the given problem using a genetic algorithm.
+
+    Parameters
+    ----------
+    n_cols : int
+        Number of columns in the population grid.
+    n_rows : int
+        Number of rows in the population grid.
+    n_gen : int
+        Number of generations to evolve.
+    ch_size : int
+        Size of the chromosome.
+    gen_type : str
+        Type of the genome representation (e.g., 'Binary', 'Permutation', 'Real').
+    p_crossover : float
+        Probability of crossover (between 0 and 1).
+    p_mutation : float
+        Probability of mutation (between 0 and 1).
+    problem : GraphProblem
+        The problem instance used for fitness evaluation.
+    selection : SelectionOperator
+        Function or class used for selecting parents.
+    recombination : RecombinationOperator
+        Function or class used for recombination (crossover).
+    mutation : MutationOperator
+        Function or class used for mutation.
+    mins : list[float]
+        List of minimum values for each gene in the chromosome (for real value optimization).
+    maxs : list[float]
+        List of maximum values for each gene in the chromosome (for real value optimization).
+    seed_par : int
+        Ensures the random number generation is repeatable.
+
+    Returns
+    -------
+    Result
+        A Result object containing the best solution found, with its chromosome, fitness value, and generation.
+    """
+
+    if seed_par is not None:
+        np.random.seed(seed_par)
+        random.seed(seed_par)
+
+    pop_size = len(problem.graph.nodes)
+    best_solutions = []
+    best_objectives = []
+    avg_objectives = []
+    method_name = OptimizationMethod.GraphCGA
+
+    # Generate Initial Population
+    pop_list = GraphPopulation(
+        graph=problem.graph,
+        method_name=method_name,
+        ch_size=ch_size,
+        n_rows=n_rows,
+        n_cols=n_cols,
+        gen_type=problem.gen_type,
+        problem=problem,
+        mins=problem.xl,
+        maxs=problem.xu,
+    ).initial_population()
+
+    pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
+
+    best_solutions.append(pop_list_ordered[0].chromosome)
+    best_objectives.append(pop_list_ordered[0].fitness_value)
+    best_ever_solution = Result(
+        chromosome=pop_list_ordered[0].chromosome,
+        fitness_value=pop_list_ordered[0].fitness_value,
+        generation_found=0,
+    )
+
+    mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
+    avg_objectives.append(mean)
+
+    # Evolutionary Algorithm Loop
+    generation = 1
+    while generation != n_gen + 1:
+        for c in range(pop_size):
+            offsprings = []
+            parents = selection(pop_list, c).get_parents()
+            rnd = np.random.rand()
+
+            if rnd < p_crossover:
+                offsprings = recombination(parents, problem).get_recombinations()
+            else:
+                offsprings = parents
+
+            for p in range(len(offsprings)):
+                mutation_cand = offsprings[p]
+                rnd = np.random.rand()
+
+                if rnd < p_mutation:
+                    mutated = mutation(mutation_cand, problem).mutate()
+                    offsprings[p] = mutated
+
+                # Replacement: Replace if better
+                if offsprings[p].fitness_value < parents[p].fitness_value:
+                    index = pop_list.index(parents[p])
+                    pop_list[index] = offsprings[p]
+
+        pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
+        best_solutions.append(pop_list_ordered[0].chromosome)
+        best_objectives.append(pop_list_ordered[0].fitness_value)
+
+        if pop_list_ordered[0].fitness_value < best_ever_solution.fitness_value:
+            best_ever_solution = Result(
+                chromosome=pop_list_ordered[0].chromosome,
+                fitness_value=pop_list_ordered[0].fitness_value,
+                generation_found=generation,
+            )
+
+        mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
+        avg_objectives.append(mean)
+        generation += 1
+
+    return best_ever_solution
+
 
 def sync_cga(
     n_cols: int,
@@ -164,7 +301,7 @@ def sync_cga(
     selection: SelectionOperator,
     recombination: RecombinationOperator,
     mutation: MutationOperator,
-    seed_par: int = None
+    seed_par: int = None,
 ) -> Result:
     """
     Optimize the given problem using a synchronous cellular genetic algorithm (Sync-CGA).
@@ -199,7 +336,7 @@ def sync_cga(
         List of maximum values for each gene in the chromosome (for real value optimization).
     seed_par : int
         Ensures the random number generation is repeatable.
-        
+
     Returns
     -------
     Result
@@ -218,14 +355,15 @@ def sync_cga(
 
     # Generate Initial Population
     pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                gen_type = problem.gen_type, 
-                problem = problem,
-                mins = problem.xl,
-                maxs = problem.xu).initial_population()
+        method_name,
+        ch_size,
+        n_rows,
+        n_cols,
+        gen_type=problem.gen_type,
+        problem=problem,
+        mins=problem.xl,
+        maxs=problem.xu,
+    ).initial_population()
 
     # Sort population by fitness value
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
@@ -236,7 +374,7 @@ def sync_cga(
     best_ever_solution = Result(
         chromosome=pop_list_ordered[0].chromosome,
         fitness_value=pop_list_ordered[0].fitness_value,
-        generation_found=0
+        generation_found=0,
     )
 
     # Calculate the mean fitness for the initial population
@@ -248,7 +386,9 @@ def sync_cga(
     aux_poplist = []
 
     while generation != n_gen + 1:
-        aux_poplist = pop_list.copy()  # Create a copy of the population for synchronous update
+        aux_poplist = (
+            pop_list.copy()
+        )  # Create a copy of the population for synchronous update
 
         for c in range(pop_size):
             offsprings = []
@@ -289,7 +429,7 @@ def sync_cga(
             best_ever_solution = Result(
                 chromosome=pop_list_ordered[0].chromosome,
                 fitness_value=pop_list_ordered[0].fitness_value,
-                generation_found=generation
+                generation_found=generation,
             )
 
         # Calculate the mean fitness for the current generation
@@ -299,6 +439,7 @@ def sync_cga(
         generation += 1
 
     return best_ever_solution
+
 
 def alpha_cga(
     n_cols: int,
@@ -311,7 +452,7 @@ def alpha_cga(
     selection: SelectionOperator,
     recombination: RecombinationOperator,
     mutation: MutationOperator,
-    seed_par: int = None
+    seed_par: int = None,
 ) -> Result:
     """
     Optimize a problem using an evolutionary algorithm with an alpha-male exchange mechanism.
@@ -365,15 +506,16 @@ def alpha_cga(
 
     # Generate Initial Population
     pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                gen_type = problem.gen_type, 
-                problem = problem,
-                mins = problem.xl,
-                maxs = problem.xu).initial_population()
-    
+        method_name,
+        ch_size,
+        n_rows,
+        n_cols,
+        gen_type=problem.gen_type,
+        problem=problem,
+        mins=problem.xl,
+        maxs=problem.xu,
+    ).initial_population()
+
     # Sort population by fitness value
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
 
@@ -383,7 +525,7 @@ def alpha_cga(
     best_ever_solution = Result(
         chromosome=pop_list_ordered[0].chromosome,
         fitness_value=pop_list_ordered[0].fitness_value,
-        generation_found=0
+        generation_found=0,
     )
 
     # Calculate mean fitness for the initial population
@@ -426,7 +568,6 @@ def alpha_cga(
                     offsprings = parents
 
                 for p in range(len(offsprings)):
-
                     mutation_cand = offsprings[p]
                     rnd = np.random.rand()
 
@@ -455,7 +596,7 @@ def alpha_cga(
             best_ever_solution = Result(
                 chromosome=pop_list_ordered[0].chromosome,
                 fitness_value=pop_list_ordered[0].fitness_value,
-                generation_found=generation
+                generation_found=generation,
             )
 
         # Update average objectives
@@ -466,13 +607,14 @@ def alpha_cga(
 
     return best_ever_solution
 
+
 def ccga(
     n_cols: int,
     n_rows: int,
     n_gen: int,
     ch_size: int,
     problem: AbstractProblem,
-    selection: SelectionOperator
+    selection: SelectionOperator,
 ) -> Result:
     """
     Perform optimization using a Cooperative Coevolutionary Genetic Algorithm (CCGA).
@@ -514,14 +656,15 @@ def ccga(
 
     # Generate Initial Population
     pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                gen_type = problem.gen_type, 
-                problem = problem,
-                mins = problem.xl,
-                maxs = problem.xu).initial_population()
+        method_name,
+        ch_size,
+        n_rows,
+        n_cols,
+        gen_type=problem.gen_type,
+        problem=problem,
+        mins=problem.xl,
+        maxs=problem.xu,
+    ).initial_population()
 
     # Sort population by fitness value
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
@@ -532,7 +675,7 @@ def ccga(
     best_ever_solution = Result(
         chromosome=pop_list_ordered[0].chromosome,
         fitness_value=pop_list_ordered[0].fitness_value,
-        generation_found=0
+        generation_found=0,
     )
 
     # Calculate mean fitness for the initial population
@@ -557,21 +700,22 @@ def ccga(
 
             # Re-generate the population based on the updated vector
             pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
+                method_name,
+                ch_size,
+                n_rows,
                 n_cols,
-                gen_type = problem.gen_type, 
-                problem = problem,
-                mins = problem.xl,
-                maxs = problem.xu).initial_population()
+                gen_type=problem.gen_type,
+                problem=problem,
+                mins=problem.xl,
+                maxs=problem.xu,
+            ).initial_population()
 
         # Update best ever solution if the current best solution is better
         if best.fitness_value > best_ever_solution.fitness_value:
             best_ever_solution = Result(
                 chromosome=best.chromosome,
                 fitness_value=best.fitness_value,
-                generation_found=generation
+                generation_found=generation,
             )
 
         # Update average objectives
@@ -582,13 +726,14 @@ def ccga(
 
     return best_ever_solution
 
+
 def mcccga(
     n_cols: int,
     n_rows: int,
     n_gen: int,
     ch_size: int,
     problem: AbstractProblem,
-    selection: SelectionOperator
+    selection: SelectionOperator,
 ) -> Result:
     """
     Optimize the given problem using a multi-population machine-coded compact genetic algorithm (MCCGA).
@@ -628,14 +773,8 @@ def mcccga(
 
     # Generate Initial Population
     pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                problem.gen_type, 
-                problem, 
-                vector).initial_population()
-
+        method_name, ch_size, n_rows, n_cols, problem.gen_type, problem, vector
+    ).initial_population()
 
     # Sort population by fitness value
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
@@ -646,7 +785,7 @@ def mcccga(
     best_ever_solution = Result(
         chromosome=best_byte_ch,
         fitness_value=pop_list_ordered[0].fitness_value,
-        generation_found=1
+        generation_found=1,
     )
 
     # Calculate the mean fitness for the initial population
@@ -658,7 +797,6 @@ def mcccga(
     generation = 1
     while generation != n_gen + 1:
         for c in range(pop_size):
-
             # Select parents from the population
             parents = selection(pop_list, c).get_parents()
             p1, p2 = parents[0], parents[1]
@@ -673,13 +811,8 @@ def mcccga(
 
         # Re-generate the population based on the updated vector
         pop_list = Population(
-                method_name, 
-                ch_size, 
-                n_rows, 
-                n_cols,
-                problem.gen_type, 
-                problem, 
-                vector).initial_population()
+            method_name, ch_size, n_rows, n_cols, problem.gen_type, problem, vector
+        ).initial_population()
 
         # Track the best fitness value and update the best solution if necessary
         best_objectives.append(best.fitness_value)
@@ -689,7 +822,7 @@ def mcccga(
             best_ever_solution = Result(
                 chromosome=best_byte_ch,
                 fitness_value=best.fitness_value,
-                generation_found=generation
+                generation_found=generation,
             )
 
         # Calculate the mean fitness for the current generation
@@ -708,10 +841,11 @@ def mcccga(
         best_ever_solution = Result(
             chromosome=best_byte_ch,
             fitness_value=best_byte_result,
-            generation_found=generation
+            generation_found=generation,
         )
 
     return best_ever_solution
+
 
 def compete(p1: Individual, p2: Individual) -> Tuple[Individual, Individual]:
     """
@@ -735,7 +869,9 @@ def compete(p1: Individual, p2: Individual) -> Tuple[Individual, Individual]:
         return p2, p1
 
 
-def update_vector(vector: List[float], winner: Individual, loser: Individual, pop_size: int):
+def update_vector(
+    vector: List[float], winner: Individual, loser: Individual, pop_size: int
+):
     """
     Update the probability vector based on the winner and loser individuals.
 
@@ -783,7 +919,9 @@ def random_vector_between(mins: List[float], maxs: List[float]) -> List[float]:
     return result
 
 
-def generate_probability_vector(mins: List[float], maxs: List[float], ntries: int) -> List[float]:
+def generate_probability_vector(
+    mins: List[float], maxs: List[float], ntries: int
+) -> List[float]:
     """
     Generate a probability vector based on the given minimum and maximum values.
 
@@ -814,6 +952,7 @@ def generate_probability_vector(mins: List[float], maxs: List[float], ntries: in
 
     return probvector
 
+
 def sample(probvector: List[float]) -> List[int]:
     """
     Sample a vector based on the provided probability vector.
@@ -836,6 +975,3 @@ def sample(probvector: List[float]) -> List[int]:
             newvector[i] = 1
 
     return newvector
-
-
-

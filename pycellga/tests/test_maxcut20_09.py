@@ -3,10 +3,12 @@ import numpy as np
 
 from pycellga.problems.single_objective.discrete.binary.maxcut20_09 import Maxcut20_09
 
+
 @pytest.fixture
 def maxcut_instance():
     """Fixture for creating an instance of the Maxcut20_09 class."""
     return Maxcut20_09()
+
 
 def test_maxcut20_09(maxcut_instance):
     """
@@ -29,6 +31,7 @@ def test_maxcut20_09(maxcut_instance):
     assert fitness_value1 > 0, f"Expected positive fitness, got {fitness_value1}"
     assert fitness_value2 == 0, f"Expected fitness of 0, got {fitness_value2}"
     assert fitness_value3 == 0, f"Expected fitness of 0, got {fitness_value3}"
+
 
 def test_maxcut20_09_evaluate(maxcut_instance):
     """

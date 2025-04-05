@@ -1,4 +1,3 @@
-
 from numpy import pi, sin
 from typing import List
 
@@ -56,19 +55,22 @@ class Fms(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         theta = (2.0 * pi) / 100.0
         a1, w1, a2, w2, a3, w3 = x
 
         def yzero(t):
-            return sin((5.0 * theta * t) - (1.5 * sin((4.8 * theta * t) + (2.0 * sin(4.9 * theta * t)))))
+            return sin(
+                (5.0 * theta * t)
+                - (1.5 * sin((4.8 * theta * t) + (2.0 * sin(4.9 * theta * t))))
+            )
 
         partial_fitness = 0.0
         for k in range(101):
-            distance = (
-                a1 * sin((w1 * theta * k) - (a2 * sin((w2 * theta * k) + (a3 * sin(w3 * theta * k)))))
-                - yzero(k)
-            )
-            partial_fitness += distance ** 2
+            distance = a1 * sin(
+                (w1 * theta * k)
+                - (a2 * sin((w2 * theta * k) + (a3 * sin(w3 * theta * k))))
+            ) - yzero(k)
+            partial_fitness += distance**2
 
         return round(partial_fitness, 3)

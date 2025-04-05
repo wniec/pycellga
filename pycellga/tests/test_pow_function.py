@@ -1,6 +1,7 @@
 import pytest
 from pycellga.problems.single_objective.continuous.pow import Pow
 
+
 @pytest.fixture
 def setup_pow():
     """
@@ -12,6 +13,7 @@ def setup_pow():
         An instance of the Pow optimization problem.
     """
     return Pow(n_var=5)
+
 
 def test_pow_function(setup_pow):
     """
@@ -34,18 +36,23 @@ def test_pow_function(setup_pow):
     - [6.0, 8.0, 10.0, 4.0, 3.0]: Near the global minimum, expected result is 5.0.
     """
     test_cases = [
-        ([5.0, 7.0, 9.0, 3.0, 2.0], 0.0),         # Global minimum
-        ([0.0, 0.0, 0.0, 0.0, 0.0], 168.0),       # All zeros
+        ([5.0, 7.0, 9.0, 3.0, 2.0], 0.0),  # Global minimum
+        ([0.0, 0.0, 0.0, 0.0, 0.0], 168.0),  # All zeros
         ([10.0, 10.0, 10.0, 10.0, 10.0], 148.0),  # Point near boundaries
         ([-5.0, -5.0, -5.0, -5.0, -5.0], 553.0),  # Negative boundary
-        ([6.0, 8.0, 10.0, 4.0, 3.0], 5.0)         # Near global minimum
+        ([6.0, 8.0, 10.0, 4.0, 3.0], 5.0),  # Near global minimum
     ]
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_pow.f(variables)
-        print(f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}")
+        print(
+            f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
+        )
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-2), f"Expected {expected_fitness}, got {fitness_value}"
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-2), (
+            f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

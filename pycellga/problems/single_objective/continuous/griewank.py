@@ -1,4 +1,3 @@
-
 import math
 from typing import List
 
@@ -64,7 +63,7 @@ class Griewank(AbstractProblem):
         float
             The computed fitness value for the given solution.
         """
-        sum_sq = sum(xi ** 2 for xi in x)
+        sum_sq = sum(xi**2 for xi in x)
         prod_cos = math.prod(math.cos(xi / math.sqrt(i + 1)) for i, xi in enumerate(x))
         fitness = 1 + sum_sq / 4000 - prod_cos
         return round(fitness, 3)

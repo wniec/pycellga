@@ -3,11 +3,12 @@ from pycellga.common import GeneType
 
 from typing import List
 
+
 class Ecc(AbstractProblem):
     """
     Error Correcting Codes Design Problem (ECC) function implementation for optimization problems.
 
-    The ECC function is used for testing optimization algorithms, particularly those involving 
+    The ECC function is used for testing optimization algorithms, particularly those involving
     error-correcting codes.
 
     Attributes
@@ -60,7 +61,7 @@ class Ecc(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         individual_length = 12  # Length of individual code segments
         half_code = self.n_var // individual_length  # Number of code segments
         partial_fitness = 0.0  # Accumulated partial fitness value
@@ -73,9 +74,8 @@ class Ecc(AbstractProblem):
                 )
 
                 if 0 < hamming < individual_length:
-                    partial_fitness += (
-                        1.0 / (hamming * hamming)
-                        + 1.0 / ((individual_length - hamming) * (individual_length - hamming))
+                    partial_fitness += 1.0 / (hamming * hamming) + 1.0 / (
+                        (individual_length - hamming) * (individual_length - hamming)
                     )
 
         # Calculate final fitness value

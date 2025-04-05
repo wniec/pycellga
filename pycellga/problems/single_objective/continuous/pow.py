@@ -1,4 +1,3 @@
-
 from mpmath import power as pw
 from typing import List
 
@@ -11,7 +10,7 @@ class Pow(AbstractProblem):
     Pow function implementation for optimization problems.
 
     The Pow function is typically used for testing optimization algorithms.
-    It is evaluated on the hypercube x_i ∈ [-5.0, 15.0] with the goal of reaching 
+    It is evaluated on the hypercube x_i ∈ [-5.0, 15.0] with the goal of reaching
     the global minimum at f(5, 7, 9, 3, 2) = 0.
 
     Attributes

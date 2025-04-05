@@ -63,7 +63,7 @@ class Chichinadze(AbstractProblem):
         term1 = x_val**2 - 12 * x_val + 11
         term2 = 10 * np.cos(np.pi * x_val / 2)
         term3 = 8 * np.sin(5 * np.pi * x_val)
-        term4 = (1.0 / np.sqrt(5)) * np.exp(-((y_val - 0.5)**2) / 2)
+        term4 = (1.0 / np.sqrt(5)) * np.exp(-((y_val - 0.5) ** 2) / 2)
         fitness = term1 + term2 + term3 - term4
 
         return round(fitness, 4)

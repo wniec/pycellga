@@ -3,6 +3,8 @@ from pycellga.common import GeneType
 
 import numpy as np
 from mpmath import power as pw
+
+
 class Sumofdifferentpowers(AbstractProblem):
     """
     Sum of Different Powers function implementation for optimization problems.

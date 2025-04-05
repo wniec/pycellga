@@ -2,9 +2,7 @@ import pytest
 from typing import List
 
 from pycellga.common import GeneType
-from pycellga.grid import Grid
 from pycellga.neighborhoods.linear_9 import Linear9
-from pycellga.byte_operators import bits_to_floats
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.population import Population, OptimizationMethod
 
@@ -18,15 +16,10 @@ class MockProblem(AbstractProblem):
     f(chromosome : List[float]) -> float
         Returns the sum of the chromosome as the fitness value.
     """
-    def __init__(self, n_var):
 
-        super().__init__(
-            gen_type=GeneType.BINARY,
-            n_var=n_var,
-            xl=0, 
-            xu=1
-        )
-    
+    def __init__(self, n_var):
+        super().__init__(gen_type=GeneType.BINARY, n_var=n_var, xl=0, xu=1)
+
     def f(self, chromosome: List[float]) -> float:
         return sum(chromosome)
 
@@ -42,14 +35,14 @@ def setup_population():
         A population instance with a mock problem.
     """
     mock_problem = MockProblem(n_var=10)
-    
+
     return Population(
         method_name=OptimizationMethod.CGA,
         ch_size=10,
         n_rows=3,
         n_cols=3,
         gen_type=GeneType.BINARY,
-        problem=mock_problem
+        problem=mock_problem,
     )
 
 
@@ -69,7 +62,9 @@ def test_initial_population_size(setup_population):
     population = setup_population
     pop_list = population.initial_population()
     expected_size = population.n_rows * population.n_cols
-    assert len(pop_list) == expected_size, f"Expected population size: {expected_size}, found: {len(pop_list)}"
+    assert len(pop_list) == expected_size, (
+        f"Expected population size: {expected_size}, found: {len(pop_list)}"
+    )
 
 
 def test_fitness_evaluation(setup_population):
@@ -90,7 +85,9 @@ def test_fitness_evaluation(setup_population):
 
     for ind in pop_list:
         expected_fitness = population.problem.f(ind.chromosome)
-        assert ind.fitness_value == expected_fitness, f"Expected fitness: {expected_fitness}, found: {ind.fitness_value}"
+        assert ind.fitness_value == expected_fitness, (
+            f"Expected fitness: {expected_fitness}, found: {ind.fitness_value}"
+        )
 
 
 def test_neighborhood_assignment(setup_population):
@@ -116,6 +113,7 @@ def test_neighborhood_assignment(setup_population):
         assert ind.neighbors_positions == expected_neighbors_positions, (
             f"Expected neighbors: {expected_neighbors_positions}, found: {ind.neighbors_positions}"
         )
+
 
 if __name__ == "__main__":
     pytest.main()

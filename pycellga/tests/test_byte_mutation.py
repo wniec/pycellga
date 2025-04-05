@@ -4,21 +4,16 @@ import numpy as np
 from pycellga.individual import Individual
 from pycellga.common import GeneType
 from pycellga.problems.abstract_problem import AbstractProblem
-from pycellga.mutation.byte_mutation import ByteMutation 
+from pycellga.mutation.byte_mutation import ByteMutation
 
 
 class MockProblem(AbstractProblem):
     """
     A mock problem class for testing purposes.
     """
-    def __init__(self, n_var):
 
-        super().__init__(
-            gen_type=GeneType.BINARY,
-            n_var=n_var,
-            xl=0, 
-            xu=1
-        )
+    def __init__(self, n_var):
+        super().__init__(gen_type=GeneType.BINARY, n_var=n_var, xl=0, xu=1)
 
     def f(self, x: list) -> float:
         """
@@ -36,6 +31,7 @@ class MockProblem(AbstractProblem):
         """
         return sum(x)
 
+
 @pytest.fixture
 def setup_individual():
     """
@@ -51,6 +47,7 @@ def setup_individual():
     ind.ch_size = 5
     return ind
 
+
 @pytest.fixture
 def setup_problem():
     """
@@ -62,6 +59,7 @@ def setup_problem():
         An instance of the mock problem.
     """
     return MockProblem(n_var=5)
+
 
 def test_byte_mutation(setup_individual, setup_problem):
     """
@@ -91,19 +89,24 @@ def test_byte_mutation(setup_individual, setup_problem):
     # Assertions to check correctness
     assert isinstance(new_individual, Individual)
     assert len(new_individual.chromosome) == setup_individual.ch_size
-    assert new_individual.chromosome != setup_individual.chromosome  # Ensure mutation has occurred
+    assert (
+        new_individual.chromosome != setup_individual.chromosome
+    )  # Ensure mutation has occurred
 
     # Additional checks to verify the mutation logic
     original_ch = setup_individual.chromosome
     mutated_ch = new_individual.chromosome
 
     # Ensure only one value in the chromosome has been mutated
-    differences = [i for i in range(len(original_ch)) if original_ch[i] != mutated_ch[i]]
+    differences = [
+        i for i in range(len(original_ch)) if original_ch[i] != mutated_ch[i]
+    ]
     assert len(differences) == 1
 
     # Check that the mutated value is a float
     mutated_value = mutated_ch[differences[0]]
     assert isinstance(mutated_value, float)
+
 
 if __name__ == "__main__":
     pytest.main()

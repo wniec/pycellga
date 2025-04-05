@@ -1,4 +1,3 @@
-
 import math
 from mpmath import power as pw
 from typing import List
@@ -69,7 +68,9 @@ class Levy(AbstractProblem):
         for i in range(self.n_var - 1):
             term1 = pw(math.sin(3 * x[i] * math.pi), 2)
             term2 = (pw((x[i] - 1), 2)) * (1 + pw(math.sin(3 * x[i + 1] * math.pi), 2))
-            term3 = (pw((x[i + 1] - 1), 2)) * (1 + pw(math.sin(2 * x[i + 1] * math.pi), 2))
+            term3 = (pw((x[i + 1] - 1), 2)) * (
+                1 + pw(math.sin(2 * x[i + 1] * math.pi), 2)
+            )
             fitness += term1 + term2 + term3
 
         return round(fitness, 3)

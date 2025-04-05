@@ -4,6 +4,7 @@ from numpy import power as pw
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Schaffer2(AbstractProblem):
     """
     Modified Schaffer function #2 implementation for optimization problems.

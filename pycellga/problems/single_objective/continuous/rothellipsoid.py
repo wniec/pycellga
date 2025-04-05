@@ -3,6 +3,7 @@ from mpmath import power as pw
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Rothellipsoid(AbstractProblem):
     """
     Rotated Hyper-Ellipsoid function implementation for optimization problems.

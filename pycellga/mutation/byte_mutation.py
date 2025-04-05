@@ -5,9 +5,10 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class ByteMutation(MutationOperator):
     """
-    ByteMutation operator defined in (Satman, 2013). ByteMutation performs a byte-wise mutation 
+    ByteMutation operator defined in (Satman, 2013). ByteMutation performs a byte-wise mutation
     on an individual's chromosome in a Genetic Algorithm.
 
     Parameters
@@ -18,7 +19,9 @@ class ByteMutation(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the ByteMutation object.
 

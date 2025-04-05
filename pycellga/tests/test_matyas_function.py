@@ -1,6 +1,7 @@
 import pytest
 from pycellga.problems.single_objective.continuous.matyas import Matyas
 
+
 @pytest.fixture
 def setup_matyas():
     """
@@ -12,6 +13,7 @@ def setup_matyas():
         An instance of the Matyas optimization problem.
     """
     return Matyas()
+
 
 def test_matyas_function(setup_matyas):
     """
@@ -44,16 +46,20 @@ def test_matyas_function(setup_matyas):
         ([1.0, 1.0], 0.04),
         ([-1.0, -1.0], 0.04),
         ([5.0, -5.0], 25.0),
-        ([10.0, 10.0], 4.0)  
+        ([10.0, 10.0], 4.0),
     ]
 
     # Loop through each test case and validate the fitness value
     for variables, expected_fitness in test_cases:
         fitness_value = setup_matyas.f(variables)
-        print(f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}")
+        print(
+            f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
+        )
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-2), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-2), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

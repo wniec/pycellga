@@ -3,6 +3,7 @@ from numpy import sin, sqrt, abs
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Schwefel(AbstractProblem):
     """
     Schwefel function implementation for optimization problems.

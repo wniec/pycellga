@@ -1,6 +1,7 @@
 import pytest
 from pycellga.problems.single_objective.continuous.chichinadze import Chichinadze
 
+
 @pytest.fixture
 def setup_chichinadze():
     """
@@ -12,6 +13,7 @@ def setup_chichinadze():
         An instance of the Chichinadze problem.
     """
     return Chichinadze()
+
 
 def test_chichinadze_function(setup_chichinadze):
     """
@@ -31,15 +33,17 @@ def test_chichinadze_function(setup_chichinadze):
         ([0.0, 0.0], 20.6066),  # Point at the origin
         ([-30.0, 30.0], 1261.0),  # Point at the boundary
         ([10.0, -10.0], -19.0),  # Arbitrary point
-        ([15.0, 15.0], 56.0)  # Another arbitrary point
+        ([15.0, 15.0], 56.0),  # Another arbitrary point
     ]
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_chichinadze.f(variables)
         print(f"Variables: {variables} => Fitness: {fitness_value}")
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-4), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-4), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

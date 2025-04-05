@@ -1,17 +1,19 @@
 import pytest
 from pycellga.problems.single_objective.continuous.rastrigin import Rastrigin
 
+
 @pytest.fixture
 def setup_rastrigin():
     """
     Fixture to provide an instance of the Rastrigin problem.
-    
+
     Returns
     -------
     Rastrigin
         An instance of the Rastrigin problem with 4 design variables.
     """
     return Rastrigin(n_var=4)
+
 
 def test_rastrigin(setup_rastrigin):
     """
@@ -29,15 +31,19 @@ def test_rastrigin(setup_rastrigin):
     test_cases = [
         ([2.305, -4.025, 3.805, -1.505], 78.375),
         ([-4.995, -2.230, -3.706, 2.305], 83.839),
-        ([0.0, 0.0, 0.0, 0.0], 0.0)  # Global minimum
+        ([0.0, 0.0, 0.0, 0.0], 0.0),  # Global minimum
     ]
 
     for variables, expected_fitness in test_cases:
         fitness_value = setup_rastrigin.f(variables)
-        print(f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}")
+        print(
+            f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
+        )
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), \
+        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
             f"Expected {expected_fitness}, got {fitness_value}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

@@ -3,6 +3,7 @@ from pycellga.common import GeneType
 
 from typing import List
 
+
 class CountSat(AbstractProblem):
     """
     CountSat function implementation for optimization problems.
@@ -59,7 +60,7 @@ class CountSat(AbstractProblem):
         """
         if len(x) != self.n_var:
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
-        
+
         total_ones = sum(1 for i in x if i == 1)
         variables = len(x)
 

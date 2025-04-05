@@ -24,7 +24,7 @@ def test_bit_flip_mutation():
     -----
     The test assumes that the BitFlipMutation class correctly implements bit flipping
     mutation and that the OneMax problem correctly evaluates the fitness of an individual.
-    
+
     The following assertions are made:
     - At least one bit in the chromosome is changed.
     - The size of the mutated individual’s chromosome matches the original size.
@@ -52,13 +52,22 @@ def test_bit_flip_mutation():
     newind = mut.mutate()
 
     # Count how many elements have changed
-    elementschanged = sum(1 for i in range(CHSIZE) if newind.chromosome[i] != ind.chromosome[i])
+    elementschanged = sum(
+        1 for i in range(CHSIZE) if newind.chromosome[i] != ind.chromosome[i]
+    )
 
     # Assertions to check correctness
     assert elementschanged > 0, "No bits were flipped during mutation."
-    assert newind.ch_size == CHSIZE, "The chromosome size of the mutated individual is incorrect."
-    assert newind.ch_size == ind.ch_size, "The chromosome size of the mutated individual does not match the original size."
-    assert newind.fitness_value == problem.f(newind.chromosome), "The fitness value of the mutated individual is incorrect."
+    assert newind.ch_size == CHSIZE, (
+        "The chromosome size of the mutated individual is incorrect."
+    )
+    assert newind.ch_size == ind.ch_size, (
+        "The chromosome size of the mutated individual does not match the original size."
+    )
+    assert newind.fitness_value == problem.f(newind.chromosome), (
+        "The fitness value of the mutated individual is incorrect."
+    )
+
 
 if __name__ == "__main__":
     pytest.main()

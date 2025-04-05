@@ -4,6 +4,7 @@ from typing import List
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Rastrigin(AbstractProblem):
     """
     Rastrigin function implementation for optimization problems.
@@ -61,5 +62,5 @@ class Rastrigin(AbstractProblem):
             raise ValueError(f"Input must have exactly {self.n_var} variables.")
 
         A = 10.0
-        fitness = (A * self.n_var) + sum([(xi ** 2) - (A * cos(2 * pi * xi)) for xi in x])
+        fitness = (A * self.n_var) + sum([(xi**2) - (A * cos(2 * pi * xi)) for xi in x])
         return round(fitness, 3)

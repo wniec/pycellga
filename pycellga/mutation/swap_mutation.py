@@ -4,6 +4,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class SwapMutation(MutationOperator):
     """
     SwapMutation performs a swap mutation on an individual's chromosome in a Genetic Algorithm.
@@ -16,7 +17,9 @@ class SwapMutation(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the SwapMutation object.
 

@@ -5,6 +5,7 @@ from typing import List
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Bohachevsky(AbstractProblem):
     """
     Bohachevsky function implementation for optimization problems.
@@ -63,10 +64,14 @@ class Bohachevsky(AbstractProblem):
         float
             The computed fitness value for the given solution.
         """
-        fitness = sum([
-            pw(x[i], 2) + (2 * pw(x[i + 1], 2)) 
-            - (0.3 * cos(3 * pi * x[i])) 
-            - (0.4 * cos(4 * pi * x[i + 1])) + 0.7
-            for i in range(len(x) - 1)
-        ])
+        fitness = sum(
+            [
+                pw(x[i], 2)
+                + (2 * pw(x[i + 1], 2))
+                - (0.3 * cos(3 * pi * x[i]))
+                - (0.4 * cos(4 * pi * x[i + 1]))
+                + 0.7
+                for i in range(len(x) - 1)
+            ]
+        )
         return round(fitness, 3)

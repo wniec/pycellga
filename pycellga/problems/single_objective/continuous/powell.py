@@ -4,13 +4,14 @@ from typing import List
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.common import GeneType
 
+
 class Powell(AbstractProblem):
     """
     Powell function implementation for optimization problems.
 
     The Powell function is widely used for testing optimization algorithms.
     It is typically evaluated on the hypercube x_i ∈ [-4, 5], for all i = 1, 2, ..., n.
-    
+
     Attributes
     ----------
     n_var : int
@@ -58,11 +59,13 @@ class Powell(AbstractProblem):
             The computed fitness value for the given solution.
         """
         if len(x) % 4 != 0:
-            raise ValueError("Powell function requires the number of variables to be a multiple of 4.")
+            raise ValueError(
+                "Powell function requires the number of variables to be a multiple of 4."
+            )
 
         fitness = 0.0
         d = len(x) // 4
-        
+
         for i in range(d):
             a = pw(x[4 * i] + 10 * x[4 * i + 1], 2)
             b = pw(x[4 * i + 2] - x[4 * i + 3], 2)

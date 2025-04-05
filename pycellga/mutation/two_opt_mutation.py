@@ -4,6 +4,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class TwoOptMutation(MutationOperator):
     """
     TwoOptMutation performs a 2-opt mutation on an individual's chromosome in a Genetic Algorithm.
@@ -16,7 +17,9 @@ class TwoOptMutation(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the TwoOptMutation object.
 

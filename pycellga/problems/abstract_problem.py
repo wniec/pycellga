@@ -4,6 +4,7 @@ from pymoo.core.problem import Problem
 
 from pycellga.common import GeneType
 
+
 class AbstractProblem(Problem, ABC):
     """
     Abstract base class for defining optimization problems compatible with pymoo.
@@ -27,7 +28,7 @@ class AbstractProblem(Problem, ABC):
     Methods
     -------
     f(x: List[Any]) -> float
-        Abstract method to compute the fitness value for a given solution. 
+        Abstract method to compute the fitness value for a given solution.
         Must be implemented by subclasses.
     evaluate(x, out, *args, **kwargs)
         Computes the objective value(s) for pymoo's optimization framework.
@@ -43,7 +44,7 @@ class AbstractProblem(Problem, ABC):
             The type of genes used in the problem (e.g., REAL, BINARY).
         n_var : int
             The number of design variables.
-        xl : float 
+        xl : float
             The lower bound for the design variables.
         xu : float
             The upper bound for the design variables.
@@ -64,7 +65,7 @@ class AbstractProblem(Problem, ABC):
         ----------
         x : list
             List of design variable values.
-        
+
         Returns
         -------
         float

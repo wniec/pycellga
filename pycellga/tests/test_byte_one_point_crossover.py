@@ -11,14 +11,9 @@ class MockProblem(AbstractProblem):
     """
     A mock problem class for testing purposes.
     """
-    def __init__(self, n_var):
 
-        super().__init__(
-            gen_type=GeneType.BINARY,
-            n_var=n_var,
-            xl=0, 
-            xu=1
-        )
+    def __init__(self, n_var):
+        super().__init__(gen_type=GeneType.BINARY, n_var=n_var, xl=0, xu=1)
 
     def f(self, x: list) -> float:
         """
@@ -35,6 +30,7 @@ class MockProblem(AbstractProblem):
             The sum of the list values.
         """
         return sum(x)
+
 
 @pytest.fixture
 def setup_parents():
@@ -54,6 +50,7 @@ def setup_parents():
     ind2.ch_size = 5
     return [ind1, ind2]
 
+
 @pytest.fixture
 def setup_problem():
     """
@@ -65,6 +62,7 @@ def setup_problem():
         An instance of the mock problem.
     """
     return MockProblem(n_var=5)
+
 
 def test_byte_one_point_crossover(setup_parents, setup_problem):
     """
@@ -115,6 +113,7 @@ def test_byte_one_point_crossover(setup_parents, setup_problem):
 
     # Ensure the offspring chromosomes are different from each other
     assert child1.chromosome != child2.chromosome
+
 
 if __name__ == "__main__":
     pytest.main()

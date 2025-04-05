@@ -3,6 +3,7 @@ from pycellga.individual import *
 from pycellga.problems.abstract_problem import AbstractProblem
 from pycellga.mutation.mutation_operator import MutationOperator
 
+
 class BitFlipMutation(MutationOperator):
     """
     BitFlipMutation performs a bit flip mutation on an individual in a Genetic Algorithm.
@@ -15,7 +16,9 @@ class BitFlipMutation(MutationOperator):
         The problem instance that provides the fitness function (default is None).
     """
 
-    def __init__(self, mutation_cand: Individual = None, problem: AbstractProblem = None):
+    def __init__(
+        self, mutation_cand: Individual = None, problem: AbstractProblem = None
+    ):
         """
         Initialize the BitFlipMutation object.
 
@@ -43,10 +46,10 @@ class BitFlipMutation(MutationOperator):
         """
         # Convert the chromosome to a list to allow mutation
         m_ch = list(self.mutation_cand.chromosome)
-        
+
         # Randomly select an index in the chromosome
         index = np.random.randint(0, len(m_ch))
-        
+
         # Flip the bit at the selected index
         if m_ch[index] == 0:
             m_ch[index] = 1

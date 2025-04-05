@@ -4,20 +4,16 @@ import random
 from pycellga.individual import Individual
 from pycellga.common import GeneType
 from pycellga.problems.abstract_problem import AbstractProblem
-from pycellga.mutation.float_uniform_mutation import FloatUniformMutation 
+from pycellga.mutation.float_uniform_mutation import FloatUniformMutation
+
 
 class MockProblem(AbstractProblem):
     """
     A mock problem class for testing purposes.
     """
-    def __init__(self, n_var):
 
-        super().__init__(
-            gen_type=GeneType.BINARY,
-            n_var=n_var,
-            xl=0, 
-            xu=1
-        )
+    def __init__(self, n_var):
+        super().__init__(gen_type=GeneType.BINARY, n_var=n_var, xl=0, xu=1)
 
     def f(self, x: list) -> float:
         """
@@ -35,6 +31,7 @@ class MockProblem(AbstractProblem):
         """
         return sum(x)
 
+
 @pytest.fixture
 def setup_individual():
     """
@@ -50,6 +47,7 @@ def setup_individual():
     ind.ch_size = 5
     return ind
 
+
 @pytest.fixture
 def setup_problem():
     """
@@ -61,6 +59,7 @@ def setup_problem():
         An instance of the mock problem.
     """
     return MockProblem(n_var=5)
+
 
 def test_float_uniform_mutation(setup_individual, setup_problem):
     """
@@ -88,9 +87,15 @@ def test_float_uniform_mutation(setup_individual, setup_problem):
     print("Mutated chromosome:", new_individual.chromosome)
 
     # Assertions to check correctness
-    assert isinstance(new_individual, Individual), "Mutated individual is not an Individual instance"
-    assert len(new_individual.chromosome) == setup_individual.ch_size, "Chromosome length mismatch"
-    assert new_individual.chromosome != setup_individual.chromosome, "Mutation did not occur"
+    assert isinstance(new_individual, Individual), (
+        "Mutated individual is not an Individual instance"
+    )
+    assert len(new_individual.chromosome) == setup_individual.ch_size, (
+        "Chromosome length mismatch"
+    )
+    assert new_individual.chromosome != setup_individual.chromosome, (
+        "Mutation did not occur"
+    )
 
     # Additional checks to verify the mutation logic
     original_ch = setup_individual.chromosome
@@ -98,11 +103,14 @@ def test_float_uniform_mutation(setup_individual, setup_problem):
 
     # Ensure each gene has been mutated within the range [-1, +1] relative to original value
     for orig, mut in zip(original_ch, mutated_ch):
-        assert abs(mut - orig) <= 1.0, f"Gene mutated outside of expected range: {mut} vs {orig}"
+        assert abs(mut - orig) <= 1.0, (
+            f"Gene mutated outside of expected range: {mut} vs {orig}"
+        )
 
     # Check that each mutated gene is a float
     for gene in mutated_ch:
         assert isinstance(gene, float), f"Gene {gene} is not a float"
+
 
 if __name__ == "__main__":
     pytest.main()

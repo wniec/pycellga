@@ -1,4 +1,3 @@
-
 from mpmath import power as pw
 from typing import List
 
