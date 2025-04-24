@@ -36,12 +36,12 @@ def test_maxcut20_01(maxcut_instance):
 
     # Specific assertions based on expected behavior
     assert fitness_value1 > 0, f"Expected positive fitness, got {fitness_value1}"
-    assert fitness_value2 == 0, (
-        f"Expected zero fitness for all-ones, got {fitness_value2}"
-    )
-    assert fitness_value3 == 0, (
-        f"Expected zero fitness for all-zeros, got {fitness_value3}"
-    )
+    assert (
+        fitness_value2 == 0
+    ), f"Expected zero fitness for all-ones, got {fitness_value2}"
+    assert (
+        fitness_value3 == 0
+    ), f"Expected zero fitness for all-zeros, got {fitness_value3}"
 
     print(
         f"Test results:\n"

@@ -87,15 +87,15 @@ def test_float_uniform_mutation(setup_individual, setup_problem):
     print("Mutated chromosome:", new_individual.chromosome)
 
     # Assertions to check correctness
-    assert isinstance(new_individual, Individual), (
-        "Mutated individual is not an Individual instance"
-    )
-    assert len(new_individual.chromosome) == setup_individual.ch_size, (
-        "Chromosome length mismatch"
-    )
-    assert new_individual.chromosome != setup_individual.chromosome, (
-        "Mutation did not occur"
-    )
+    assert isinstance(
+        new_individual, Individual
+    ), "Mutated individual is not an Individual instance"
+    assert (
+        len(new_individual.chromosome) == setup_individual.ch_size
+    ), "Chromosome length mismatch"
+    assert (
+        new_individual.chromosome != setup_individual.chromosome
+    ), "Mutation did not occur"
 
     # Additional checks to verify the mutation logic
     original_ch = setup_individual.chromosome
@@ -103,9 +103,9 @@ def test_float_uniform_mutation(setup_individual, setup_problem):
 
     # Ensure each gene has been mutated within the range [-1, +1] relative to original value
     for orig, mut in zip(original_ch, mutated_ch):
-        assert abs(mut - orig) <= 1.0, (
-            f"Gene mutated outside of expected range: {mut} vs {orig}"
-        )
+        assert (
+            abs(mut - orig) <= 1.0
+        ), f"Gene mutated outside of expected range: {mut} vs {orig}"
 
     # Check that each mutated gene is a float
     for gene in mutated_ch:

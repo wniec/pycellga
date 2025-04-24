@@ -38,9 +38,9 @@ def test_bohachevsky(setup_bohachevsky):
     for variables, expected_fitness in test_cases:
         fitness_value = setup_bohachevsky.f(variables)
         print(f"Variables: {variables} => Fitness: {fitness_value}")
-        assert pytest.approx(fitness_value, rel=1e-3) == expected_fitness, (
-            f"Bohachevsky function value at {variables} does not match expected result. Expected {expected_fitness}, got {fitness_value}"
-        )
+        assert (
+            pytest.approx(fitness_value, rel=1e-3) == expected_fitness
+        ), f"Bohachevsky function value at {variables} does not match expected result. Expected {expected_fitness}, got {fitness_value}"
 
 
 if __name__ == "__main__":

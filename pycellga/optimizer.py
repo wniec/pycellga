@@ -242,7 +242,6 @@ def graph_cga(
         fitness_value=pop_list_ordered[0].fitness_value,
         generation_found=0,
     )
-
     mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
     avg_objectives.append(mean)
 
@@ -273,6 +272,7 @@ def graph_cga(
                     pop_list[index] = offsprings[p]
 
         pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
+
         best_solutions.append(pop_list_ordered[0].chromosome)
         best_objectives.append(pop_list_ordered[0].fitness_value)
 

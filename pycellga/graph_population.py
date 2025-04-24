@@ -1,5 +1,5 @@
 from typing import List
-
+import numpy as np
 from networkx import Graph
 from pycellga.grid import Grid
 from pycellga.individual import Individual
@@ -50,7 +50,7 @@ class GraphPopulation(Population):
 
             # Initialize chromosome and evaluate fitness for cga, syn_cga and alpha_cga
             ind.chromosome = ind.randomize()
-            ind.fitness_value = self.problem.f(ind.chromosome)
+            ind.fitness_value = self.problem.f(np.array(ind.chromosome))
 
             ind.position = grid[i]
             ind.neighbors = self.graph.neighbors(i)

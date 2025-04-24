@@ -44,24 +44,24 @@ def test_tournament_selection():
 
     # Verify the attributes of each selected parent
     for parent in parents:
-        assert parent.ch_size == CH_SIZE, (
-            "Parent chromosome size does not match expected size."
-        )
+        assert (
+            parent.ch_size == CH_SIZE
+        ), "Parent chromosome size does not match expected size."
         assert parent.fitness_value is not None, "Parent fitness value is None."
-        assert isinstance(parent.neighbors_positions, list), (
-            "Parent neighbors_positions is not of type list."
-        )
-        assert isinstance(parent.position, tuple), (
-            "Parent position is not of type tuple."
-        )
+        assert isinstance(
+            parent.neighbors_positions, list
+        ), "Parent neighbors_positions is not of type list."
+        assert isinstance(
+            parent.position, tuple
+        ), "Parent position is not of type tuple."
 
     # Check that the selected parents have different chromosomes and positions
-    assert parents[0].chromosome != parents[1].chromosome, (
-        "Selected parents have the same chromosome."
-    )
-    assert parents[0].position != parents[1].position, (
-        "Selected parents have the same position."
-    )
+    assert (
+        parents[0].chromosome != parents[1].chromosome
+    ), "Selected parents have the same chromosome."
+    assert (
+        parents[0].position != parents[1].position
+    ), "Selected parents have the same position."
 
 
 if __name__ == "__main__":

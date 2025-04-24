@@ -41,20 +41,22 @@ def test_two_point_crossover():
 
     # Check that the chromosome size of both offspring matches the parents
     assert child1.ch_size == child2.ch_size, "Offspring chromosome sizes do not match."
-    assert child1.ch_size == CHSIZE, (
-        "Offspring chromosome size does not match expected size."
-    )
+    assert (
+        child1.ch_size == CHSIZE
+    ), "Offspring chromosome size does not match expected size."
 
     # Verify that the chromosomes of the offspring contain only binary values
     for i in range(CHSIZE):
-        assert child1.chromosome[i] in [0, 1], (
-            f"Invalid value in child1 chromosome at index {i}."
-        )
+        assert child1.chromosome[i] in [
+            0,
+            1,
+        ], f"Invalid value in child1 chromosome at index {i}."
 
     for i in range(CHSIZE):
-        assert child2.chromosome[i] in [0, 1], (
-            f"Invalid value in child2 chromosome at index {i}."
-        )
+        assert child2.chromosome[i] in [
+            0,
+            1,
+        ], f"Invalid value in child2 chromosome at index {i}."
 
 
 if __name__ == "__main__":

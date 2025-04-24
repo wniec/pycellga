@@ -58,15 +58,15 @@ def test_bit_flip_mutation():
 
     # Assertions to check correctness
     assert elementschanged > 0, "No bits were flipped during mutation."
-    assert newind.ch_size == CHSIZE, (
-        "The chromosome size of the mutated individual is incorrect."
-    )
-    assert newind.ch_size == ind.ch_size, (
-        "The chromosome size of the mutated individual does not match the original size."
-    )
-    assert newind.fitness_value == problem.f(newind.chromosome), (
-        "The fitness value of the mutated individual is incorrect."
-    )
+    assert (
+        newind.ch_size == CHSIZE
+    ), "The chromosome size of the mutated individual is incorrect."
+    assert (
+        newind.ch_size == ind.ch_size
+    ), "The chromosome size of the mutated individual does not match the original size."
+    assert newind.fitness_value == problem.f(
+        newind.chromosome
+    ), "The fitness value of the mutated individual is incorrect."
 
 
 if __name__ == "__main__":

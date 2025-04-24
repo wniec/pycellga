@@ -40,9 +40,9 @@ def test_griewank_function(setup_griewank):
         fitness_value = setup_griewank.f(variables)
         print(f"Variables: {variables} => Fitness: {fitness_value}")
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
-            f"Expected {expected_fitness}, got {fitness_value}"
-        )
+        assert fitness_value == pytest.approx(
+            expected_fitness, rel=1e-3
+        ), f"Expected {expected_fitness}, got {fitness_value}"
 
 
 if __name__ == "__main__":

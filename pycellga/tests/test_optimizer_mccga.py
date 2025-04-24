@@ -25,9 +25,9 @@ def test_optimizer_mccga_binary():
         selection=TournamentSelection,
     )
     assert result.fitness_value == 0.0, "The mcccga did not find the global minimum."
-    assert result.chromosome == [0.0] * 5, (
-        "The chromosome does not match the global minimum."
-    )
+    assert (
+        result.chromosome == [0.0] * 5
+    ), "The chromosome does not match the global minimum."
 
 
 if __name__ == "__main__":

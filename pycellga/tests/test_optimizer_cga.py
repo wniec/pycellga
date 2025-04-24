@@ -38,9 +38,9 @@ def test_optimizer_cga_real():
         mutation=ByteMutationRandom,
     )
     assert result.fitness_value == 0.0, "The CGA did not find the global minimum."
-    assert result.chromosome == [0.0] * 5, (
-        "The chromosome does not match the global minimum."
-    )
+    assert (
+        result.chromosome == [0.0] * 5
+    ), "The chromosome does not match the global minimum."
 
 
 class BinaryProblem(AbstractProblem):
@@ -65,9 +65,9 @@ def test_optimizer_cga_binary():
         mutation=BitFlipMutation,
     )
     assert result.fitness_value == -10, "The CGA did not maximize the number of 1s."
-    assert result.chromosome == [1] * 10, (
-        "The chromosome does not match the optimal binary sequence."
-    )
+    assert (
+        result.chromosome == [1] * 10
+    ), "The chromosome does not match the optimal binary sequence."
 
 
 class PermutationProblem(AbstractProblem):
@@ -99,9 +99,9 @@ class PermutationProblem(AbstractProblem):
         print(result.chromosome)
         print(result.fitness_value)
         assert result.fitness_value == 0.0, "The CGA did not find the global minimum."
-        assert result.chromosome == target_permutation, (
-            "The chromosome does not match the target permutation."
-        )
+        assert (
+            result.chromosome == target_permutation
+        ), "The chromosome does not match the target permutation."
 
 
 if __name__ == "__main__":

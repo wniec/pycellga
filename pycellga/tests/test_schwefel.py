@@ -43,9 +43,9 @@ def test_schwefel(setup_schwefel):
     ), "Failed test for input [-400.995, -25.230, -410.706, 420.305]"
 
     # Testing for the global minimum case
-    assert theproblem.f([420.9687 for _ in range(4)]) == pytest.approx(0.0, rel=1e-3), (
-        "Failed test for input [420.9687, 420.9687, 420.9687, 420.9687]"
-    )
+    assert theproblem.f([420.9687 for _ in range(4)]) == pytest.approx(
+        0.0, rel=1e-3
+    ), "Failed test for input [420.9687, 420.9687, 420.9687, 420.9687]"
 
 
 if __name__ == "__main__":

@@ -80,7 +80,7 @@ class ByteOnePointCrossover(RecombinationOperator):
         child_1 = Individual()
         child_1.position = p1.position
         child_1.neighbors_positions = p1.neighbors_positions
-        child_1.fitness_value = self.problem.f(child_ch1)
+        child_1.fitness_value = self.problem.f(np.array(child_ch1))
         child_1.chromosome = child_ch1
         child_1.ch_size = len(child_1.chromosome)
         offsprings.append(child_1)
@@ -89,7 +89,7 @@ class ByteOnePointCrossover(RecombinationOperator):
         child_2 = Individual()
         child_2.position = p2.position
         child_2.neighbors_positions = p2.neighbors_positions
-        child_2.fitness_value = self.problem.f(child_ch2)
+        child_2.fitness_value = self.problem.f(np.array(child_ch2))
         child_2.chromosome = child_ch2
         child_2.ch_size = len(child_2.chromosome)
         offsprings.append(child_2)

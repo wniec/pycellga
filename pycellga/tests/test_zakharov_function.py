@@ -36,9 +36,9 @@ def test_zakharov_function(setup_zakharov):
             f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
         )
         assert isinstance(fitness_value, float)
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
-            f"Expected {expected_fitness}, got {fitness_value}"
-        )
+        assert fitness_value == pytest.approx(
+            expected_fitness, rel=1e-3
+        ), f"Expected {expected_fitness}, got {fitness_value}"
 
     # Run test case with 3-variable problem
     variables, expected_fitness = extended_test_case
@@ -47,9 +47,9 @@ def test_zakharov_function(setup_zakharov):
         f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
     )
     assert isinstance(fitness_value, float)
-    assert fitness_value == pytest.approx(expected_fitness, rel=1e-3), (
-        f"Expected {expected_fitness}, got {fitness_value}"
-    )
+    assert fitness_value == pytest.approx(
+        expected_fitness, rel=1e-3
+    ), f"Expected {expected_fitness}, got {fitness_value}"
 
 
 if __name__ == "__main__":

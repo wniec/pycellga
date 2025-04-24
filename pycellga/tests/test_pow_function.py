@@ -49,9 +49,9 @@ def test_pow_function(setup_pow):
             f"Variables: {variables} => Fitness: {fitness_value}, Expected: {expected_fitness}"
         )
         assert isinstance(fitness_value, float), "Fitness value should be a float."
-        assert fitness_value == pytest.approx(expected_fitness, rel=1e-2), (
-            f"Expected {expected_fitness}, got {fitness_value}"
-        )
+        assert fitness_value == pytest.approx(
+            expected_fitness, rel=1e-2
+        ), f"Expected {expected_fitness}, got {fitness_value}"
 
 
 if __name__ == "__main__":

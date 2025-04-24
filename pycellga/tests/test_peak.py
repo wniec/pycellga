@@ -46,9 +46,9 @@ def test_peak(peak_instance):
             f"Chromosome: {chromosome[:12]}... (truncated) => Fitness: {fitness_value}"
         )
         assert isinstance(fitness_value, float)
-        assert fitness_value == expected_fitness, (
-            f"Expected {expected_fitness}, got {fitness_value}"
-        )
+        assert (
+            fitness_value == expected_fitness
+        ), f"Expected {expected_fitness}, got {fitness_value}"
 
 
 if __name__ == "__main__":

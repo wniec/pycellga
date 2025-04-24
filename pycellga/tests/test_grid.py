@@ -28,6 +28,7 @@ def test_grid():
     assert len(result) == 25, f"Expected length 25, got {len(result)}"
     assert type(result[0]) == tuple, f"Expected tuple, got {type(result[0])}"
     assert result[0] == (1, 1), f"Expected (1, 1), got {result[0]}"
-    assert result[len(result) - 1] == (5, 5), (
-        f"Expected (5, 5), got {result[len(result) - 1]}"
-    )
+    assert result[len(result) - 1] == (
+        5,
+        5,
+    ), f"Expected (5, 5), got {result[len(result) - 1]}"

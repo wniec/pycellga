@@ -37,9 +37,9 @@ def test_optimizer_alpha_cga_real():
         mutation=ByteMutationRandom,
     )
     assert result.fitness_value == 0.0, "The alpha_cga did not find the global minimum."
-    assert result.chromosome == [0.0] * 5, (
-        "The chromosome does not match the global minimum."
-    )
+    assert (
+        result.chromosome == [0.0] * 5
+    ), "The chromosome does not match the global minimum."
 
 
 class BinaryProblem(AbstractProblem):
@@ -63,12 +63,12 @@ def test_optimizer_alpha_cga_binary():
         recombination=OnePointCrossover,
         mutation=BitFlipMutation,
     )
-    assert result.fitness_value == -10, (
-        "The alpha_cga did not maximize the number of 1s."
-    )
-    assert result.chromosome == [1] * 10, (
-        "The chromosome does not match the optimal binary sequence."
-    )
+    assert (
+        result.fitness_value == -10
+    ), "The alpha_cga did not maximize the number of 1s."
+    assert (
+        result.chromosome == [1] * 10
+    ), "The chromosome does not match the optimal binary sequence."
 
 
 class PermutationProblem(AbstractProblem):
@@ -99,12 +99,12 @@ class PermutationProblem(AbstractProblem):
         # Assert that the alpha_cga finds the global minimum
         print(result.fitness_value)
         print(result.chromosome)
-        assert result.fitness_value == 0.0, (
-            "The alpha_cga did not find the global minimum."
-        )
-        assert result.chromosome == target_permutation, (
-            "The chromosome does not match the target permutation."
-        )
+        assert (
+            result.fitness_value == 0.0
+        ), "The alpha_cga did not find the global minimum."
+        assert (
+            result.chromosome == target_permutation
+        ), "The chromosome does not match the target permutation."
 
 
 if __name__ == "__main__":

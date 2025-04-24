@@ -35,24 +35,24 @@ def test_compact_13():
     the_neighbors_positions = Compact13(
         position, n_rows, n_cols
     ).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 12, (
-        "The number of neighbors for a central position is not 12."
-    )
+    assert (
+        len(the_neighbors_positions) == 12
+    ), "The number of neighbors for a central position is not 12."
 
     # Test for a position near the bottom-left corner of the grid
     position = (5, 1)
     the_neighbors_positions = Compact13(
         position, n_rows, n_cols
     ).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 12, (
-        "The number of neighbors for a bottom-left corner position is not 12."
-    )
+    assert (
+        len(the_neighbors_positions) == 12
+    ), "The number of neighbors for a bottom-left corner position is not 12."
 
     # Test for a position near the top-center of the grid
     position = (1, 3)
     the_neighbors_positions = Compact13(
         position, n_rows, n_cols
     ).calculate_neighbors_positions()
-    assert len(the_neighbors_positions) == 12, (
-        "The number of neighbors for a top-center position is not 12."
-    )
+    assert (
+        len(the_neighbors_positions) == 12
+    ), "The number of neighbors for a top-center position is not 12."

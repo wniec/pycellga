@@ -45,6 +45,6 @@ def test_pmx_crossover():
 
     # Check that the chromosome size of both offspring matches the parents
     assert child1.ch_size == child2.ch_size, "Offspring chromosome sizes do not match."
-    assert child1.ch_size == CHSIZE, (
-        "Offspring chromosome size does not match expected size."
-    )
+    assert (
+        child1.ch_size == CHSIZE
+    ), "Offspring chromosome size does not match expected size."

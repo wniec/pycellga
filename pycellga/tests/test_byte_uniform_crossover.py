@@ -95,12 +95,12 @@ def test_byte_uniform_crossover(setup_parents, setup_problem):
     # Assertions to check correctness
     assert isinstance(child1, Individual), "Child 1 is not an Individual instance"
     assert isinstance(child2, Individual), "Child 2 is not an Individual instance"
-    assert len(child1.chromosome) == setup_parents[0].ch_size, (
-        "Child 1 chromosome length mismatch"
-    )
-    assert len(child2.chromosome) == setup_parents[1].ch_size, (
-        "Child 2 chromosome length mismatch"
-    )
+    assert (
+        len(child1.chromosome) == setup_parents[0].ch_size
+    ), "Child 1 chromosome length mismatch"
+    assert (
+        len(child2.chromosome) == setup_parents[1].ch_size
+    ), "Child 2 chromosome length mismatch"
 
     # Ensure the offspring chromosomes are valid floats
     for gene in child1.chromosome:
@@ -110,18 +110,18 @@ def test_byte_uniform_crossover(setup_parents, setup_problem):
         assert isinstance(gene, float), f"Child 2 chromosome gene {gene} is not a float"
 
     # Ensure the offspring chromosomes are different from the parents
-    assert child1.chromosome != setup_parents[0].chromosome, (
-        "Child 1 chromosome matches Parent 1"
-    )
-    assert child1.chromosome != setup_parents[1].chromosome, (
-        "Child 1 chromosome matches Parent 2"
-    )
-    assert child2.chromosome != setup_parents[0].chromosome, (
-        "Child 2 chromosome matches Parent 1"
-    )
-    assert child2.chromosome != setup_parents[1].chromosome, (
-        "Child 2 chromosome matches Parent 2"
-    )
+    assert (
+        child1.chromosome != setup_parents[0].chromosome
+    ), "Child 1 chromosome matches Parent 1"
+    assert (
+        child1.chromosome != setup_parents[1].chromosome
+    ), "Child 1 chromosome matches Parent 2"
+    assert (
+        child2.chromosome != setup_parents[0].chromosome
+    ), "Child 2 chromosome matches Parent 1"
+    assert (
+        child2.chromosome != setup_parents[1].chromosome
+    ), "Child 2 chromosome matches Parent 2"
 
     # Ensure the offspring chromosomes are different from each other
     assert child1.chromosome != child2.chromosome, "Child 1 chromosome matches Child 2"
