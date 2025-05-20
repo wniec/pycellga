@@ -4,8 +4,8 @@ from pycellga.mutation.byte_mutation_random import ByteMutationRandom
 from pycellga.recombination.byte_one_point_crossover import ByteOnePointCrossover
 from pycellga.selection.tournament_selection import TournamentSelection
 
-from GraphProblem import GraphRastriginProblem
-from optimizer import graph_cga
+from pycellga.GraphProblem import GraphRastriginProblem
+from pycellga.optimizer import graph_cga
 
 if __name__ == "__main__":
     graph = erdos_renyi_graph(n=100, p=0.5)
