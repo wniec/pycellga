@@ -14,13 +14,16 @@ class GraphProblem(AbstractProblem):
 
 
 class GraphRastriginProblem(AbstractProblem):
-    def __init__(self, n_var, graph: Graph, offset: float):
+    def __init__(self, n_var, graph: Graph, offset: float, boudaries=5):
         super().__init__(
             gen_type=GeneType.REAL, n_var=n_var, xl=-5, xu=5
         )  #  Typical optimization interval for rastrigin function
         self.graph = graph
         self.n_var = n_var
         self.offset = offset
+        self.xl = [- boudaries] * n_var
+        self.xu = [boudaries] * n_var
+
 
     def f(self, x: np.ndarray) -> float:
         # ręczna implementacja funkcji rastrigina w n wymiarach
