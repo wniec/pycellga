@@ -20,3 +20,5 @@ docs/html/**
 /build/
 /dist/
 /*.egg-info/
+
+report.log
