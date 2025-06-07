@@ -23,6 +23,7 @@ class Result:
     chromosome: List[float]
     fitness_value: float
     generation_found: int
+    fitness_history: List[float]
 
 
 def cga(
@@ -157,6 +158,160 @@ def cga(
     return best_ever_solution
 
 
+# def graph_cga(
+#     n_cols: int,
+#     n_rows: int,
+#     n_gen: int,
+#     ch_size: int,
+#     p_crossover: float,
+#     p_mutation: float,
+#     problem: GraphProblem,
+#     selection: SelectionOperator,
+#     recombination: RecombinationOperator,
+#     mutation: MutationOperator,
+#     seed_par: int = None,
+# ) -> Result:
+#     """
+#     Optimize the given problem using a genetic algorithm.
+#
+#     Parameters
+#     ----------
+#     n_cols : int
+#         Number of columns in the population grid.
+#     n_rows : int
+#         Number of rows in the population grid.
+#     n_gen : int
+#         Number of generations to evolve.
+#     ch_size : int
+#         Size of the chromosome.
+#     gen_type : str
+#         Type of the genome representation (e.g., 'Binary', 'Permutation', 'Real').
+#     p_crossover : float
+#         Probability of crossover (between 0 and 1).
+#     p_mutation : float
+#         Probability of mutation (between 0 and 1).
+#     problem : GraphProblem
+#         The problem instance used for fitness evaluation.
+#     selection : SelectionOperator
+#         Function or class used for selecting parents.
+#     recombination : RecombinationOperator
+#         recombination (crossover).
+#     mutation : MutationOperatorFunction or class used for
+#         Function or class used for mutation.
+#     mins : list[float]
+#         List of minimum values for each gene in the chromosome (for real value optimization).
+#     maxs : list[float]
+#         List of maximum values for each gene in the chromosome (for real value optimization).
+#     seed_par : int
+#         Ensures the random number generation is repeatable.
+#
+#     Returns
+#     -------
+#     Result
+#         A Result object containing the best solution found, with its chromosome, fitness value, and generation.
+#     """
+#
+#     if seed_par is not None:
+#         np.random.seed(seed_par)
+#         random.seed(seed_par)
+#
+#     pop_size = len(problem.graph.nodes)
+#     best_solutions = []
+#     best_objectives = []
+#     avg_objectives = []
+#     method_name = OptimizationMethod.GraphCGA
+#     fitness_history = []
+#
+#     # Generate Initial Population
+#     pop_list = GraphPopulation(
+#         graph=problem.graph,
+#         method_name=method_name,
+#         ch_size=ch_size,
+#         n_rows=n_rows,
+#         n_cols=n_cols,
+#         gen_type=problem.gen_type,
+#         problem=problem,
+#         mins=problem.xl,
+#         maxs=problem.xu,
+#     ).initial_population()
+#
+#     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
+#
+#     best_solutions.append(pop_list_ordered[0].chromosome)
+#     best_objectives.append(pop_list_ordered[0].fitness_value)
+#     best_ever_solution = Result(
+#         chromosome=pop_list_ordered[0].chromosome,
+#         fitness_value=pop_list_ordered[0].fitness_value,
+#         generation_found=0,
+#         fitness_history=[]
+#     )
+#     mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
+#     avg_objectives.append(mean)
+#
+#     best_so_far = pop_list_ordered[0].fitness_value
+#
+#     for ind in pop_list:
+#         if ind.fitness_value < best_so_far:
+#             best_so_far = ind.fitness_value
+#         fitness_history.append(best_so_far)
+#
+#     # Evolutionary Algorithm Loop
+#     generation = 1
+#     while generation != n_gen + 1:
+#         for c in range(pop_size):
+#             offsprings = []
+#             parents = selection(pop_list, c).get_parents()
+#             rnd = np.random.rand()
+#
+#             if rnd < p_crossover:
+#                 offsprings = recombination(parents, problem).get_recombinations()
+#             else:
+#                 offsprings = parents
+#
+#             for p in range(len(offsprings)):
+#                 mutation_cand = offsprings[p]
+#                 rnd = np.random.rand()
+#
+#                 if rnd < p_mutation:
+#                     mutated = mutation(mutation_cand, problem).mutate()
+#                     offsprings[p] = mutated
+#
+#                 if offsprings[p].fitness_value < best_so_far:
+#                     best_so_far = offsprings[p].fitness_value
+#
+#                 fitness_history.append(best_so_far)
+#
+#                 # Replacement: Replace if better
+#                 if offsprings[p].fitness_value < parents[p].fitness_value:
+#                     index = pop_list.index(parents[p])
+#                     pop_list[index] = offsprings[p]
+#
+#         pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
+#
+#         best_solutions.append(pop_list_ordered[0].chromosome)
+#         best_objectives.append(pop_list_ordered[0].fitness_value)
+#
+#         if pop_list_ordered[0].fitness_value < best_ever_solution.fitness_value:
+#             best_ever_solution = Result(
+#                 chromosome=pop_list_ordered[0].chromosome,
+#                 fitness_value=pop_list_ordered[0].fitness_value,
+#                 generation_found=generation,
+#                 fitness_history=[]
+#             )
+#
+#         mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
+#         avg_objectives.append(mean)
+#         generation += 1
+#
+#     expected_evals = (n_gen) * pop_size
+#     fitness_history = fitness_history[:expected_evals]
+#     if len(fitness_history) < expected_evals:
+#         fitness_history.extend([best_so_far] * (expected_evals - len(fitness_history)))
+#
+#     best_ever_solution.fitness_history = fitness_history
+#     return best_ever_solution
+
+
 def graph_cga(
     n_cols: int,
     n_rows: int,
@@ -170,46 +325,6 @@ def graph_cga(
     mutation: MutationOperator,
     seed_par: int = None,
 ) -> Result:
-    """
-    Optimize the given problem using a genetic algorithm.
-
-    Parameters
-    ----------
-    n_cols : int
-        Number of columns in the population grid.
-    n_rows : int
-        Number of rows in the population grid.
-    n_gen : int
-        Number of generations to evolve.
-    ch_size : int
-        Size of the chromosome.
-    gen_type : str
-        Type of the genome representation (e.g., 'Binary', 'Permutation', 'Real').
-    p_crossover : float
-        Probability of crossover (between 0 and 1).
-    p_mutation : float
-        Probability of mutation (between 0 and 1).
-    problem : GraphProblem
-        The problem instance used for fitness evaluation.
-    selection : SelectionOperator
-        Function or class used for selecting parents.
-    recombination : RecombinationOperator
-        Function or class used for recombination (crossover).
-    mutation : MutationOperator
-        Function or class used for mutation.
-    mins : list[float]
-        List of minimum values for each gene in the chromosome (for real value optimization).
-    maxs : list[float]
-        List of maximum values for each gene in the chromosome (for real value optimization).
-    seed_par : int
-        Ensures the random number generation is repeatable.
-
-    Returns
-    -------
-    Result
-        A Result object containing the best solution found, with its chromosome, fitness value, and generation.
-    """
-
     if seed_par is not None:
         np.random.seed(seed_par)
         random.seed(seed_par)
@@ -218,9 +333,11 @@ def graph_cga(
     best_solutions = []
     best_objectives = []
     avg_objectives = []
+    fitness_history = []
+
     method_name = OptimizationMethod.GraphCGA
 
-    # Generate Initial Population
+    # Generate Initial Population from graph
     pop_list = GraphPopulation(
         graph=problem.graph,
         method_name=method_name,
@@ -234,45 +351,53 @@ def graph_cga(
     ).initial_population()
 
     pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
-
-    best_solutions.append(pop_list_ordered[0].chromosome)
-    best_objectives.append(pop_list_ordered[0].fitness_value)
     best_ever_solution = Result(
         chromosome=pop_list_ordered[0].chromosome,
         fitness_value=pop_list_ordered[0].fitness_value,
         generation_found=0,
+        fitness_history=[]
     )
+    best_solutions.append(pop_list_ordered[0].chromosome)
+    best_objectives.append(pop_list_ordered[0].fitness_value)
+
     mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
     avg_objectives.append(mean)
 
-    # Evolutionary Algorithm Loop
+    best_so_far = pop_list_ordered[0].fitness_value
+    for ind in pop_list:
+        if ind.fitness_value < best_so_far:
+            best_so_far = ind.fitness_value
+        fitness_history.append(best_so_far)
+
     generation = 1
-    while generation != n_gen + 1:
+    while generation <= n_gen:
         for c in range(pop_size):
             offsprings = []
-            parents = selection(pop_list, c).get_parents()
-            rnd = np.random.rand()
-
-            if rnd < p_crossover:
+            # Selection must receive the correct index or position
+            selector = selection(pop_list, c)
+            parents = selector.get_parents()
+            if np.random.rand() < p_crossover:
                 offsprings = recombination(parents, problem).get_recombinations()
             else:
                 offsprings = parents
 
             for p in range(len(offsprings)):
-                mutation_cand = offsprings[p]
-                rnd = np.random.rand()
+                if np.random.rand() < p_mutation:
+                    offsprings[p] = mutation(offsprings[p], problem).mutate()
 
-                if rnd < p_mutation:
-                    mutated = mutation(mutation_cand, problem).mutate()
-                    offsprings[p] = mutated
-
-                # Replacement: Replace if better
+                # Replace if better
                 if offsprings[p].fitness_value < parents[p].fitness_value:
-                    index = pop_list.index(parents[p])
-                    pop_list[index] = offsprings[p]
+                    try:
+                        index = pop_list.index(parents[p])
+                        pop_list[index] = offsprings[p]
+                        if offsprings[p].fitness_value < best_so_far:
+                            best_so_far = offsprings[p].fitness_value
+                    except ValueError:
+                        pass  # if parent is not found, skip
+
+                fitness_history.append(best_so_far)
 
         pop_list_ordered = sorted(pop_list, key=lambda x: x.fitness_value)
-
         best_solutions.append(pop_list_ordered[0].chromosome)
         best_objectives.append(pop_list_ordered[0].fitness_value)
 
@@ -281,14 +406,15 @@ def graph_cga(
                 chromosome=pop_list_ordered[0].chromosome,
                 fitness_value=pop_list_ordered[0].fitness_value,
                 generation_found=generation,
+                fitness_history=[]
             )
 
         mean = sum(ind.fitness_value for ind in pop_list) / len(pop_list)
         avg_objectives.append(mean)
         generation += 1
 
+    best_ever_solution.fitness_history = fitness_history
     return best_ever_solution
-
 
 def sync_cga(
     n_cols: int,

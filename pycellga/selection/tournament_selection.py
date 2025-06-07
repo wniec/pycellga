@@ -4,7 +4,7 @@ from typing import List
 from pycellga.individual import Individual
 from pycellga.selection.selection_operator import SelectionOperator
 
-
+import random
 class TournamentSelection(SelectionOperator):
     """
     TournamentSelection performs a tournament selection on a population of individuals
@@ -40,37 +40,39 @@ class TournamentSelection(SelectionOperator):
     def get_parents(self) -> List[Individual]:
         """
         Perform the tournament selection to get parent individuals.
-
         Returns
         -------
         list of Individual
             A list containing the selected parent individuals.
         """
         parents = []
+
+        # Always include self as p1
         p1 = self.pop_list[self.c - 1]
         parents.append(p1)
-        neighbors_positions = p1.neighbors_positions
-        neighbors = []
 
-        # Find neighbors in the population
-        for i in range(len(self.pop_list)):
-            if self.pop_list[i].position in neighbors_positions:
-                neighbors.append(self.pop_list[i])
+        # Retrieve neighbors
+        neighbors_positions = getattr(p1, "neighbors_positions", [])
+        neighbors = [
+            ind for ind in self.pop_list if getattr(ind, "position", None) in neighbors_positions
+        ]
 
-        tournament_selection_pool = []
+        # Fallback if no neighbors found
+        if not neighbors:
+            print(f"[WARN] Individual {self.c} has no neighbors. Using self-mating.")
+            parents.append(p1)
+            return parents
 
-        # Select K individuals randomly from neighbors for the tournament
-        while len(tournament_selection_pool) < self.K:
-            index = np.random.randint(0, len(neighbors))
-            if neighbors[index] not in tournament_selection_pool:
-                tournament_selection_pool.append(neighbors[index])
+        # Reduce K if fewer neighbors than K
+        k = min(self.K, len(neighbors))
+        tournament_selection_pool = random.sample(neighbors, k)
 
         # Sort the tournament selection pool by fitness value in descending order
         tournament_selection_pool_ordered = sorted(
             tournament_selection_pool, key=lambda x: x.fitness_value, reverse=True
         )
 
-        # Select the individual with the highest fitness value as the second parent
+        # Select the best from tournament as p2
         p2 = tournament_selection_pool_ordered[0]
         parents.append(p2)
 
